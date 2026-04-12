@@ -1,0 +1,45 @@
+{
+  "generated_at": "2026-04-06T22:04:09.118181",
+  "splits": [
+    {
+      "split": "train",
+      "total_rows": 41899,
+      "avg_tweet_length": 18.3,
+      "class_distribution": {
+        "neutral": 19217,
+        "positive": 14720,
+        "negative": 7962
+      }
+    },
+    {
+      "split": "validation",
+      "total_rows": 8979,
+      "avg_tweet_length": 18.4,
+      "class_distribution": {
+        "neutral": 4119,
+        "positive": 3154,
+        "negative": 1706
+      }
+    },
+    {
+      "split": "test_general",
+      "total_rows": 8979,
+      "avg_tweet_length": 18.4,
+      "class_distribution": {
+        "neutral": 4118,
+        "positive": 3155,
+        "negative": 1706
+      }
+    },
+    {
+      "split": "test_domain_shift",
+      "total_rows": 20931,
+      "avg_tweet_length": 22.7,
+      "class_distribution": {
+        "neutral": 20931
+      }
+    }
+  ],
+  "total_general_training_data": 50878,
+  "total_domain_shift_test_data": 20931
+}

@@ -1,0 +1,19 @@
+# Core data & ML
+pandas
+numpy
+scipy
+scikit-learn
+
+# Hugging Face (pipeline data loading + DistilBERT train/eval)
+datasets
+transformers
+huggingface_hub
+
+# Deep learning (install CPU or CUDA build from https://pytorch.org if needed)
+torch
+
+# NLP utilities
+emoji
+
+# Plotting (evaluate_models confusion matrices & charts)
+matplotlib

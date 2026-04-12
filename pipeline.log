@@ -1,0 +1,239 @@
+2026-04-06 21:59:49,907 [INFO] Directory structure created under 'data/'
+2026-04-06 21:59:49,909 [INFO] Downloading TweetEval sentiment dataset …
+2026-04-06 21:59:50,635 [INFO] HTTP Request: HEAD https://huggingface.co/datasets/tweet_eval/resolve/main/README.md "HTTP/1.1 307 Temporary Redirect"
+2026-04-06 21:59:50,800 [INFO] HTTP Request: HEAD https://huggingface.co/datasets/cardiffnlp/tweet_eval/resolve/main/README.md "HTTP/1.1 307 Temporary Redirect"
+2026-04-06 21:59:50,801 [WARNING] Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+2026-04-06 21:59:50,986 [INFO] HTTP Request: HEAD https://huggingface.co/api/resolve-cache/datasets/cardiffnlp/tweet_eval/b3a375baf0f409c77e6bc7aa35102b7b3534f8be/README.md "HTTP/1.1 200 OK"
+2026-04-06 21:59:51,166 [INFO] HTTP Request: GET https://huggingface.co/api/resolve-cache/datasets/cardiffnlp/tweet_eval/b3a375baf0f409c77e6bc7aa35102b7b3534f8be/README.md "HTTP/1.1 200 OK"
+2026-04-06 21:59:51,344 [INFO] HTTP Request: HEAD https://huggingface.co/datasets/tweet_eval/resolve/b3a375baf0f409c77e6bc7aa35102b7b3534f8be/tweet_eval.py "HTTP/1.1 307 Temporary Redirect"
+2026-04-06 21:59:51,500 [INFO] HTTP Request: HEAD https://huggingface.co/datasets/cardiffnlp/tweet_eval/resolve/b3a375baf0f409c77e6bc7aa35102b7b3534f8be/tweet_eval.py "HTTP/1.1 404 Not Found"
+2026-04-06 21:59:51,944 [INFO] HTTP Request: HEAD https://s3.amazonaws.com/datasets.huggingface.co/datasets/datasets/tweet_eval/tweet_eval.py "HTTP/1.1 404 Not Found"
+2026-04-06 21:59:52,204 [INFO] HTTP Request: GET https://huggingface.co/api/datasets/tweet_eval/revision/b3a375baf0f409c77e6bc7aa35102b7b3534f8be "HTTP/1.1 307 Temporary Redirect"
+2026-04-06 21:59:52,432 [INFO] HTTP Request: GET https://huggingface.co/api/datasets/cardiffnlp/tweet_eval/revision/b3a375baf0f409c77e6bc7aa35102b7b3534f8be "HTTP/1.1 200 OK"
+2026-04-06 21:59:52,592 [INFO] HTTP Request: HEAD https://huggingface.co/datasets/tweet_eval/resolve/b3a375baf0f409c77e6bc7aa35102b7b3534f8be/.huggingface.yaml "HTTP/1.1 307 Temporary Redirect"
+2026-04-06 21:59:52,750 [INFO] HTTP Request: HEAD https://huggingface.co/datasets/cardiffnlp/tweet_eval/resolve/b3a375baf0f409c77e6bc7aa35102b7b3534f8be/.huggingface.yaml "HTTP/1.1 404 Not Found"
+2026-04-06 21:59:53,025 [INFO] HTTP Request: GET https://datasets-server.huggingface.co/info?dataset=tweet_eval "HTTP/1.1 404 Not Found"
+2026-04-06 21:59:53,189 [INFO] HTTP Request: GET https://huggingface.co/api/datasets/tweet_eval/tree/b3a375baf0f409c77e6bc7aa35102b7b3534f8be/emoji?recursive=true&expand=false "HTTP/1.1 307 Temporary Redirect"
+2026-04-06 21:59:53,356 [INFO] HTTP Request: GET https://huggingface.co/api/datasets/cardiffnlp/tweet_eval/tree/b3a375baf0f409c77e6bc7aa35102b7b3534f8be/emoji?recursive=true&expand=false "HTTP/1.1 200 OK"
+2026-04-06 21:59:53,522 [INFO] HTTP Request: GET https://huggingface.co/api/datasets/tweet_eval/tree/b3a375baf0f409c77e6bc7aa35102b7b3534f8be?recursive=false&expand=false "HTTP/1.1 307 Temporary Redirect"
+2026-04-06 21:59:53,689 [INFO] HTTP Request: GET https://huggingface.co/api/datasets/cardiffnlp/tweet_eval/tree/b3a375baf0f409c77e6bc7aa35102b7b3534f8be?recursive=false&expand=false "HTTP/1.1 200 OK"
+2026-04-06 21:59:53,863 [INFO] HTTP Request: HEAD https://huggingface.co/datasets/tweet_eval/resolve/b3a375baf0f409c77e6bc7aa35102b7b3534f8be/dataset_infos.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-06 21:59:54,017 [INFO] HTTP Request: HEAD https://huggingface.co/datasets/cardiffnlp/tweet_eval/resolve/b3a375baf0f409c77e6bc7aa35102b7b3534f8be/dataset_infos.json "HTTP/1.1 404 Not Found"
+2026-04-06 21:59:54,181 [INFO] HTTP Request: GET https://huggingface.co/api/datasets/tweet_eval/tree/b3a375baf0f409c77e6bc7aa35102b7b3534f8be/sentiment?recursive=true&expand=false "HTTP/1.1 307 Temporary Redirect"
+2026-04-06 21:59:54,349 [INFO] HTTP Request: GET https://huggingface.co/api/datasets/cardiffnlp/tweet_eval/tree/b3a375baf0f409c77e6bc7aa35102b7b3534f8be/sentiment?recursive=true&expand=false "HTTP/1.1 200 OK"
+2026-04-06 21:59:55,254 [INFO] HTTP Request: HEAD https://huggingface.co/datasets/tweet_eval/resolve/b3a375baf0f409c77e6bc7aa35102b7b3534f8be/sentiment/train-00000-of-00001.parquet "HTTP/1.1 307 Temporary Redirect"
+2026-04-06 21:59:55,415 [INFO] HTTP Request: HEAD https://huggingface.co/datasets/cardiffnlp/tweet_eval/resolve/b3a375baf0f409c77e6bc7aa35102b7b3534f8be/sentiment/train-00000-of-00001.parquet "HTTP/1.1 302 Found"
+2026-04-06 21:59:55,637 [INFO] HTTP Request: GET https://huggingface.co/api/datasets/cardiffnlp/tweet_eval/xet-read-token/b3a375baf0f409c77e6bc7aa35102b7b3534f8be "HTTP/1.1 200 OK"
+2026-04-06 22:00:05,044 [INFO] HTTP Request: HEAD https://huggingface.co/datasets/tweet_eval/resolve/b3a375baf0f409c77e6bc7aa35102b7b3534f8be/sentiment/test-00000-of-00001.parquet "HTTP/1.1 307 Temporary Redirect"
+2026-04-06 22:00:05,227 [INFO] HTTP Request: HEAD https://huggingface.co/datasets/cardiffnlp/tweet_eval/resolve/b3a375baf0f409c77e6bc7aa35102b7b3534f8be/sentiment/test-00000-of-00001.parquet "HTTP/1.1 302 Found"
+2026-04-06 22:00:09,411 [INFO] HTTP Request: HEAD https://huggingface.co/datasets/tweet_eval/resolve/b3a375baf0f409c77e6bc7aa35102b7b3534f8be/sentiment/validation-00000-of-00001.parquet "HTTP/1.1 307 Temporary Redirect"
+2026-04-06 22:00:09,569 [INFO] HTTP Request: HEAD https://huggingface.co/datasets/cardiffnlp/tweet_eval/resolve/b3a375baf0f409c77e6bc7aa35102b7b3534f8be/sentiment/validation-00000-of-00001.parquet "HTTP/1.1 302 Found"
+2026-04-06 22:00:11,172 [INFO] TweetEval loaded: 59899 rows
+2026-04-06 22:00:11,464 [INFO] Downloading disaster tweets dataset …
+2026-04-06 22:00:11,626 [INFO] HTTP Request: HEAD https://huggingface.co/datasets/disaster_response_messages/resolve/main/README.md "HTTP/1.1 307 Temporary Redirect"
+2026-04-06 22:00:11,798 [INFO] HTTP Request: HEAD https://huggingface.co/datasets/community-datasets/disaster_response_messages/resolve/main/README.md "HTTP/1.1 307 Temporary Redirect"
+2026-04-06 22:00:11,974 [INFO] HTTP Request: HEAD https://huggingface.co/api/resolve-cache/datasets/community-datasets/disaster_response_messages/c62813f72d9723bcbc3e3075fc0d149ca9981077/README.md "HTTP/1.1 200 OK"
+2026-04-06 22:00:12,171 [INFO] HTTP Request: GET https://huggingface.co/api/resolve-cache/datasets/community-datasets/disaster_response_messages/c62813f72d9723bcbc3e3075fc0d149ca9981077/README.md "HTTP/1.1 200 OK"
+2026-04-06 22:00:12,335 [INFO] HTTP Request: HEAD https://huggingface.co/datasets/disaster_response_messages/resolve/c62813f72d9723bcbc3e3075fc0d149ca9981077/disaster_response_messages.py "HTTP/1.1 307 Temporary Redirect"
+2026-04-06 22:00:12,506 [INFO] HTTP Request: HEAD https://huggingface.co/datasets/community-datasets/disaster_response_messages/resolve/c62813f72d9723bcbc3e3075fc0d149ca9981077/disaster_response_messages.py "HTTP/1.1 404 Not Found"
+2026-04-06 22:00:13,000 [INFO] HTTP Request: HEAD https://s3.amazonaws.com/datasets.huggingface.co/datasets/datasets/disaster_response_messages/disaster_response_messages.py "HTTP/1.1 404 Not Found"
+2026-04-06 22:00:13,218 [INFO] HTTP Request: GET https://huggingface.co/api/datasets/disaster_response_messages/revision/c62813f72d9723bcbc3e3075fc0d149ca9981077 "HTTP/1.1 307 Temporary Redirect"
+2026-04-06 22:00:13,408 [INFO] HTTP Request: GET https://huggingface.co/api/datasets/community-datasets/disaster_response_messages/revision/c62813f72d9723bcbc3e3075fc0d149ca9981077 "HTTP/1.1 200 OK"
+2026-04-06 22:00:13,573 [INFO] HTTP Request: HEAD https://huggingface.co/datasets/disaster_response_messages/resolve/c62813f72d9723bcbc3e3075fc0d149ca9981077/.huggingface.yaml "HTTP/1.1 307 Temporary Redirect"
+2026-04-06 22:00:13,736 [INFO] HTTP Request: HEAD https://huggingface.co/datasets/community-datasets/disaster_response_messages/resolve/c62813f72d9723bcbc3e3075fc0d149ca9981077/.huggingface.yaml "HTTP/1.1 404 Not Found"
+2026-04-06 22:00:13,933 [INFO] HTTP Request: GET https://datasets-server.huggingface.co/info?dataset=disaster_response_messages "HTTP/1.1 404 Not Found"
+2026-04-06 22:00:14,095 [INFO] HTTP Request: GET https://huggingface.co/api/datasets/disaster_response_messages/tree/c62813f72d9723bcbc3e3075fc0d149ca9981077/data?recursive=true&expand=false "HTTP/1.1 307 Temporary Redirect"
+2026-04-06 22:00:14,320 [INFO] HTTP Request: GET https://huggingface.co/api/datasets/community-datasets/disaster_response_messages/tree/c62813f72d9723bcbc3e3075fc0d149ca9981077/data?recursive=true&expand=false "HTTP/1.1 200 OK"
+2026-04-06 22:00:14,482 [INFO] HTTP Request: GET https://huggingface.co/api/datasets/disaster_response_messages/tree/c62813f72d9723bcbc3e3075fc0d149ca9981077?recursive=false&expand=false "HTTP/1.1 307 Temporary Redirect"
+2026-04-06 22:00:14,679 [INFO] HTTP Request: GET https://huggingface.co/api/datasets/community-datasets/disaster_response_messages/tree/c62813f72d9723bcbc3e3075fc0d149ca9981077?recursive=false&expand=false "HTTP/1.1 200 OK"
+2026-04-06 22:00:14,858 [INFO] HTTP Request: HEAD https://huggingface.co/datasets/disaster_response_messages/resolve/c62813f72d9723bcbc3e3075fc0d149ca9981077/dataset_infos.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-06 22:00:15,026 [INFO] HTTP Request: HEAD https://huggingface.co/datasets/community-datasets/disaster_response_messages/resolve/c62813f72d9723bcbc3e3075fc0d149ca9981077/dataset_infos.json "HTTP/1.1 404 Not Found"
+2026-04-06 22:00:15,212 [INFO] HTTP Request: HEAD https://huggingface.co/datasets/disaster_response_messages/resolve/c62813f72d9723bcbc3e3075fc0d149ca9981077/data/train-00000-of-00001.parquet "HTTP/1.1 307 Temporary Redirect"
+2026-04-06 22:00:15,382 [INFO] HTTP Request: HEAD https://huggingface.co/datasets/community-datasets/disaster_response_messages/resolve/c62813f72d9723bcbc3e3075fc0d149ca9981077/data/train-00000-of-00001.parquet "HTTP/1.1 302 Found"
+2026-04-06 22:00:15,545 [INFO] HTTP Request: GET https://huggingface.co/api/datasets/community-datasets/disaster_response_messages/xet-read-token/c62813f72d9723bcbc3e3075fc0d149ca9981077 "HTTP/1.1 200 OK"
+2026-04-06 22:00:17,719 [INFO] HTTP Request: HEAD https://huggingface.co/datasets/disaster_response_messages/resolve/c62813f72d9723bcbc3e3075fc0d149ca9981077/data/test-00000-of-00001.parquet "HTTP/1.1 307 Temporary Redirect"
+2026-04-06 22:00:17,886 [INFO] HTTP Request: HEAD https://huggingface.co/datasets/community-datasets/disaster_response_messages/resolve/c62813f72d9723bcbc3e3075fc0d149ca9981077/data/test-00000-of-00001.parquet "HTTP/1.1 302 Found"
+2026-04-06 22:00:19,470 [INFO] HTTP Request: HEAD https://huggingface.co/datasets/disaster_response_messages/resolve/c62813f72d9723bcbc3e3075fc0d149ca9981077/data/validation-00000-of-00001.parquet "HTTP/1.1 307 Temporary Redirect"
+2026-04-06 22:00:19,641 [INFO] HTTP Request: HEAD https://huggingface.co/datasets/community-datasets/disaster_response_messages/resolve/c62813f72d9723bcbc3e3075fc0d149ca9981077/data/validation-00000-of-00001.parquet "HTTP/1.1 302 Found"
+2026-04-06 22:01:33,226 [INFO] Directory structure created under 'data/'
+2026-04-06 22:01:33,227 [WARNING] HF unavailable – generating synthetic data for demo purposes.
+2026-04-06 22:01:33,269 [INFO] Missing values: {'text': 0, 'sentiment': 0, 'source_domain': 0}
+2026-04-06 22:01:33,270 [INFO] Empty texts: 0
+2026-04-06 22:01:33,275 [INFO] Avg length: 6.1 tokens | too short: 0 | too long: 0
+2026-04-06 22:01:33,277 [INFO] Class distribution: {'neutral': 174, 'negative': 166, 'positive': 160}
+2026-04-06 22:01:33,278 [INFO] Exact duplicate tweets: 485 (97.0%)
+2026-04-06 22:01:33,280 [INFO] Missing values: {'text': 0, 'sentiment': 0, 'source_domain': 0}
+2026-04-06 22:01:33,281 [INFO] Empty texts: 0
+2026-04-06 22:01:33,283 [INFO] Avg length: 8.1 tokens | too short: 0 | too long: 0
+2026-04-06 22:01:33,285 [INFO] Class distribution: {'neutral': 200}
+2026-04-06 22:01:33,285 [INFO] Exact duplicate tweets: 160 (80.0%)
+2026-04-06 22:01:33,287 [INFO] Duplicates removed: 485 (97.0%)
+2026-04-06 22:01:33,288 [INFO] Length filter removed 0 rows (min=2, max=300)
+2026-04-06 22:01:33,290 [INFO] Duplicates removed: 160 (80.0%)
+2026-04-06 22:01:33,291 [INFO] Length filter removed 0 rows (min=2, max=300)
+2026-04-06 22:02:32,589 [INFO] ======= Sentiment Data Pipeline START =======
+2026-04-06 22:02:32,591 [INFO] Directory structure created under 'data/'
+2026-04-06 22:02:32,591 [INFO] Downloading TweetEval sentiment dataset ...
+2026-04-06 22:02:33,305 [INFO] HTTP Request: HEAD https://huggingface.co/datasets/tweet_eval/resolve/main/README.md "HTTP/1.1 307 Temporary Redirect"
+2026-04-06 22:02:33,460 [INFO] HTTP Request: HEAD https://huggingface.co/datasets/cardiffnlp/tweet_eval/resolve/main/README.md "HTTP/1.1 307 Temporary Redirect"
+2026-04-06 22:02:33,469 [INFO] HTTP Request: HEAD https://huggingface.co/api/resolve-cache/datasets/cardiffnlp/tweet_eval/b3a375baf0f409c77e6bc7aa35102b7b3534f8be/README.md "HTTP/1.1 200 OK"
+2026-04-06 22:02:33,658 [INFO] HTTP Request: HEAD https://huggingface.co/datasets/tweet_eval/resolve/b3a375baf0f409c77e6bc7aa35102b7b3534f8be/tweet_eval.py "HTTP/1.1 307 Temporary Redirect"
+2026-04-06 22:02:33,820 [INFO] HTTP Request: HEAD https://huggingface.co/datasets/cardiffnlp/tweet_eval/resolve/b3a375baf0f409c77e6bc7aa35102b7b3534f8be/tweet_eval.py "HTTP/1.1 404 Not Found"
+2026-04-06 22:02:33,820 [WARNING] Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+2026-04-06 22:02:34,239 [INFO] HTTP Request: HEAD https://s3.amazonaws.com/datasets.huggingface.co/datasets/datasets/tweet_eval/tweet_eval.py "HTTP/1.1 404 Not Found"
+2026-04-06 22:02:34,462 [INFO] HTTP Request: GET https://huggingface.co/api/datasets/tweet_eval/revision/b3a375baf0f409c77e6bc7aa35102b7b3534f8be "HTTP/1.1 307 Temporary Redirect"
+2026-04-06 22:02:34,622 [INFO] HTTP Request: GET https://huggingface.co/api/datasets/cardiffnlp/tweet_eval/revision/b3a375baf0f409c77e6bc7aa35102b7b3534f8be "HTTP/1.1 200 OK"
+2026-04-06 22:02:34,784 [INFO] HTTP Request: HEAD https://huggingface.co/datasets/tweet_eval/resolve/b3a375baf0f409c77e6bc7aa35102b7b3534f8be/.huggingface.yaml "HTTP/1.1 307 Temporary Redirect"
+2026-04-06 22:02:34,942 [INFO] HTTP Request: HEAD https://huggingface.co/datasets/cardiffnlp/tweet_eval/resolve/b3a375baf0f409c77e6bc7aa35102b7b3534f8be/.huggingface.yaml "HTTP/1.1 404 Not Found"
+2026-04-06 22:02:35,197 [INFO] HTTP Request: GET https://datasets-server.huggingface.co/info?dataset=tweet_eval "HTTP/1.1 404 Not Found"
+2026-04-06 22:02:35,361 [INFO] HTTP Request: GET https://huggingface.co/api/datasets/tweet_eval/tree/b3a375baf0f409c77e6bc7aa35102b7b3534f8be/emoji?recursive=true&expand=false "HTTP/1.1 307 Temporary Redirect"
+2026-04-06 22:02:35,525 [INFO] HTTP Request: GET https://huggingface.co/api/datasets/cardiffnlp/tweet_eval/tree/b3a375baf0f409c77e6bc7aa35102b7b3534f8be/emoji?recursive=true&expand=false "HTTP/1.1 200 OK"
+2026-04-06 22:02:35,680 [INFO] HTTP Request: GET https://huggingface.co/api/datasets/tweet_eval/tree/b3a375baf0f409c77e6bc7aa35102b7b3534f8be?recursive=false&expand=false "HTTP/1.1 307 Temporary Redirect"
+2026-04-06 22:02:35,843 [INFO] HTTP Request: GET https://huggingface.co/api/datasets/cardiffnlp/tweet_eval/tree/b3a375baf0f409c77e6bc7aa35102b7b3534f8be?recursive=false&expand=false "HTTP/1.1 200 OK"
+2026-04-06 22:02:36,021 [INFO] HTTP Request: HEAD https://huggingface.co/datasets/tweet_eval/resolve/b3a375baf0f409c77e6bc7aa35102b7b3534f8be/dataset_infos.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-06 22:02:36,184 [INFO] HTTP Request: HEAD https://huggingface.co/datasets/cardiffnlp/tweet_eval/resolve/b3a375baf0f409c77e6bc7aa35102b7b3534f8be/dataset_infos.json "HTTP/1.1 404 Not Found"
+2026-04-06 22:02:36,363 [INFO] HTTP Request: GET https://huggingface.co/api/datasets/tweet_eval/tree/b3a375baf0f409c77e6bc7aa35102b7b3534f8be/sentiment?recursive=true&expand=false "HTTP/1.1 307 Temporary Redirect"
+2026-04-06 22:02:36,523 [INFO] HTTP Request: GET https://huggingface.co/api/datasets/cardiffnlp/tweet_eval/tree/b3a375baf0f409c77e6bc7aa35102b7b3534f8be/sentiment?recursive=true&expand=false "HTTP/1.1 200 OK"
+2026-04-06 22:02:36,836 [INFO] TweetEval loaded: 59899 rows
+2026-04-06 22:02:37,170 [INFO] Raw TweetEval saved -> data\raw\tweeteval_raw.csv
+2026-04-06 22:02:37,170 [INFO] Downloading disaster tweets dataset ...
+2026-04-06 22:02:37,327 [INFO] HTTP Request: HEAD https://huggingface.co/datasets/disaster_response_messages/resolve/main/README.md "HTTP/1.1 307 Temporary Redirect"
+2026-04-06 22:02:37,491 [INFO] HTTP Request: HEAD https://huggingface.co/datasets/community-datasets/disaster_response_messages/resolve/main/README.md "HTTP/1.1 307 Temporary Redirect"
+2026-04-06 22:02:37,500 [INFO] HTTP Request: HEAD https://huggingface.co/api/resolve-cache/datasets/community-datasets/disaster_response_messages/c62813f72d9723bcbc3e3075fc0d149ca9981077/README.md "HTTP/1.1 200 OK"
+2026-04-06 22:02:37,674 [INFO] HTTP Request: HEAD https://huggingface.co/datasets/disaster_response_messages/resolve/c62813f72d9723bcbc3e3075fc0d149ca9981077/disaster_response_messages.py "HTTP/1.1 307 Temporary Redirect"
+2026-04-06 22:02:37,834 [INFO] HTTP Request: HEAD https://huggingface.co/datasets/community-datasets/disaster_response_messages/resolve/c62813f72d9723bcbc3e3075fc0d149ca9981077/disaster_response_messages.py "HTTP/1.1 404 Not Found"
+2026-04-06 22:02:37,968 [INFO] HTTP Request: HEAD https://s3.amazonaws.com/datasets.huggingface.co/datasets/datasets/disaster_response_messages/disaster_response_messages.py "HTTP/1.1 404 Not Found"
+2026-04-06 22:02:38,155 [INFO] HTTP Request: GET https://huggingface.co/api/datasets/disaster_response_messages/revision/c62813f72d9723bcbc3e3075fc0d149ca9981077 "HTTP/1.1 307 Temporary Redirect"
+2026-04-06 22:02:38,315 [INFO] HTTP Request: GET https://huggingface.co/api/datasets/community-datasets/disaster_response_messages/revision/c62813f72d9723bcbc3e3075fc0d149ca9981077 "HTTP/1.1 200 OK"
+2026-04-06 22:02:38,474 [INFO] HTTP Request: HEAD https://huggingface.co/datasets/disaster_response_messages/resolve/c62813f72d9723bcbc3e3075fc0d149ca9981077/.huggingface.yaml "HTTP/1.1 307 Temporary Redirect"
+2026-04-06 22:02:38,637 [INFO] HTTP Request: HEAD https://huggingface.co/datasets/community-datasets/disaster_response_messages/resolve/c62813f72d9723bcbc3e3075fc0d149ca9981077/.huggingface.yaml "HTTP/1.1 404 Not Found"
+2026-04-06 22:02:39,002 [INFO] HTTP Request: GET https://datasets-server.huggingface.co/info?dataset=disaster_response_messages "HTTP/1.1 404 Not Found"
+2026-04-06 22:02:39,167 [INFO] HTTP Request: GET https://huggingface.co/api/datasets/disaster_response_messages/tree/c62813f72d9723bcbc3e3075fc0d149ca9981077/data?recursive=true&expand=false "HTTP/1.1 307 Temporary Redirect"
+2026-04-06 22:02:39,333 [INFO] HTTP Request: GET https://huggingface.co/api/datasets/community-datasets/disaster_response_messages/tree/c62813f72d9723bcbc3e3075fc0d149ca9981077/data?recursive=true&expand=false "HTTP/1.1 200 OK"
+2026-04-06 22:02:39,498 [INFO] HTTP Request: GET https://huggingface.co/api/datasets/disaster_response_messages/tree/c62813f72d9723bcbc3e3075fc0d149ca9981077?recursive=false&expand=false "HTTP/1.1 307 Temporary Redirect"
+2026-04-06 22:02:39,656 [INFO] HTTP Request: GET https://huggingface.co/api/datasets/community-datasets/disaster_response_messages/tree/c62813f72d9723bcbc3e3075fc0d149ca9981077?recursive=false&expand=false "HTTP/1.1 200 OK"
+2026-04-06 22:02:39,837 [INFO] HTTP Request: HEAD https://huggingface.co/datasets/disaster_response_messages/resolve/c62813f72d9723bcbc3e3075fc0d149ca9981077/dataset_infos.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-06 22:02:39,995 [INFO] HTTP Request: HEAD https://huggingface.co/datasets/community-datasets/disaster_response_messages/resolve/c62813f72d9723bcbc3e3075fc0d149ca9981077/dataset_infos.json "HTTP/1.1 404 Not Found"
+2026-04-06 22:02:40,079 [INFO] Disaster tweets loaded: 21046 rows
+2026-04-06 22:02:40,200 [INFO] Raw disaster data saved -> data\raw\disaster_raw.csv
+2026-04-06 22:02:41,633 [INFO] Removed 1 empty rows after cleaning
+2026-04-06 22:02:41,634 [INFO] --- Quality checks: general (pre-dedup) ---
+2026-04-06 22:02:41,635 [INFO] Missing values: {'text': 0, 'sentiment': 0, 'source_domain': 0}
+2026-04-06 22:02:41,641 [INFO] Empty texts: 0
+2026-04-06 22:02:41,902 [INFO] Avg length: 18.3 tokens | too short: 12 | too long: 0
+2026-04-06 22:02:41,910 [INFO] Class distribution: {'neutral': 27479, 'positive': 21043, 'negative': 11377}
+2026-04-06 22:02:41,928 [INFO] Exact duplicate tweets: 30 (0.1%)
+2026-04-06 22:02:41,929 [INFO] --- Quality checks: domain  (pre-dedup) ---
+2026-04-06 22:02:41,930 [INFO] Missing values: {'text': 0, 'sentiment': 0, 'source_domain': 0}
+2026-04-06 22:02:41,932 [INFO] Empty texts: 0
+2026-04-06 22:02:42,009 [INFO] Avg length: 23.7 tokens | too short: 9 | too long: 37
+2026-04-06 22:02:42,012 [INFO] Class distribution: {'neutral': 21045}
+2026-04-06 22:02:42,017 [INFO] Exact duplicate tweets: 69 (0.3%)
+2026-04-06 22:02:42,036 [INFO] Duplicates removed: 30 (0.1%)
+2026-04-06 22:02:42,268 [INFO] Length filter removed 12 rows (min=2, max=300)
+2026-04-06 22:02:42,291 [INFO] Duplicates removed: 69 (0.3%)
+2026-04-06 22:02:42,380 [INFO] Length filter removed 45 rows (min=2, max=300)
+2026-04-06 22:02:43,980 [INFO] Split -> train: 41899 | val: 8979 | test: 8979
+2026-04-06 22:02:44,379 [INFO] Cleaned datasets saved to 'data/'
+2026-04-06 22:02:44,697 [INFO] --- Data Statistics Report ---
+2026-04-06 22:02:44,697 [INFO] [train] rows=41899 | avg_len=18.3 | classes={'neutral': 19217, 'positive': 14720, 'negative': 7962}
+2026-04-06 22:02:44,697 [INFO] [validation] rows=8979 | avg_len=18.4 | classes={'neutral': 4119, 'positive': 3154, 'negative': 1706}
+2026-04-06 22:02:44,698 [INFO] [test_general] rows=8979 | avg_len=18.4 | classes={'neutral': 4118, 'positive': 3155, 'negative': 1706}
+2026-04-06 22:02:44,698 [INFO] [test_domain_shift] rows=20931 | avg_len=22.7 | classes={'neutral': 20931}
+2026-04-06 22:02:44,699 [INFO] Statistics report saved -> data\reports\data_statistics.json
+2026-04-06 22:02:44,700 [INFO] --- Quality checks: train (final) ---
+2026-04-06 22:02:44,701 [INFO] Missing values: {'text': 0, 'sentiment': 0, 'source_domain': 0}
+2026-04-06 22:02:44,705 [INFO] Empty texts: 0
+2026-04-06 22:02:44,853 [INFO] Avg length: 18.3 tokens | too short: 0 | too long: 0
+2026-04-06 22:02:44,860 [INFO] Class distribution: {'neutral': 19217, 'positive': 14720, 'negative': 7962}
+2026-04-06 22:02:44,873 [INFO] Exact duplicate tweets: 0 (0.0%)
+2026-04-06 22:02:44,873 [INFO] --- Quality checks: domain_shift (final) ---
+2026-04-06 22:02:44,874 [INFO] Missing values: {'text': 0, 'sentiment': 0, 'source_domain': 0}
+2026-04-06 22:02:44,877 [INFO] Empty texts: 0
+2026-04-06 22:02:44,966 [INFO] Avg length: 22.7 tokens | too short: 0 | too long: 0
+2026-04-06 22:02:44,969 [INFO] Class distribution: {'neutral': 20931}
+2026-04-06 22:02:44,980 [INFO] Exact duplicate tweets: 0 (0.0%)
+2026-04-06 22:02:44,980 [INFO] ======= Sentiment Data Pipeline COMPLETE =======
+2026-04-06 22:03:57,861 [INFO] ======= Sentiment Data Pipeline START =======
+2026-04-06 22:03:57,863 [INFO] Directory structure created under 'data/'
+2026-04-06 22:03:57,864 [INFO] Downloading TweetEval sentiment dataset ...
+2026-04-06 22:03:58,539 [INFO] HTTP Request: HEAD https://huggingface.co/datasets/tweet_eval/resolve/main/README.md "HTTP/1.1 307 Temporary Redirect"
+2026-04-06 22:03:58,698 [INFO] HTTP Request: HEAD https://huggingface.co/datasets/cardiffnlp/tweet_eval/resolve/main/README.md "HTTP/1.1 307 Temporary Redirect"
+2026-04-06 22:03:58,707 [INFO] HTTP Request: HEAD https://huggingface.co/api/resolve-cache/datasets/cardiffnlp/tweet_eval/b3a375baf0f409c77e6bc7aa35102b7b3534f8be/README.md "HTTP/1.1 200 OK"
+2026-04-06 22:03:58,869 [INFO] HTTP Request: HEAD https://huggingface.co/datasets/tweet_eval/resolve/b3a375baf0f409c77e6bc7aa35102b7b3534f8be/tweet_eval.py "HTTP/1.1 307 Temporary Redirect"
+2026-04-06 22:03:59,037 [INFO] HTTP Request: HEAD https://huggingface.co/datasets/cardiffnlp/tweet_eval/resolve/b3a375baf0f409c77e6bc7aa35102b7b3534f8be/tweet_eval.py "HTTP/1.1 404 Not Found"
+2026-04-06 22:03:59,037 [WARNING] Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+2026-04-06 22:03:59,499 [INFO] HTTP Request: HEAD https://s3.amazonaws.com/datasets.huggingface.co/datasets/datasets/tweet_eval/tweet_eval.py "HTTP/1.1 404 Not Found"
+2026-04-06 22:03:59,731 [INFO] HTTP Request: GET https://huggingface.co/api/datasets/tweet_eval/revision/b3a375baf0f409c77e6bc7aa35102b7b3534f8be "HTTP/1.1 307 Temporary Redirect"
+2026-04-06 22:03:59,887 [INFO] HTTP Request: GET https://huggingface.co/api/datasets/cardiffnlp/tweet_eval/revision/b3a375baf0f409c77e6bc7aa35102b7b3534f8be "HTTP/1.1 200 OK"
+2026-04-06 22:04:00,045 [INFO] HTTP Request: HEAD https://huggingface.co/datasets/tweet_eval/resolve/b3a375baf0f409c77e6bc7aa35102b7b3534f8be/.huggingface.yaml "HTTP/1.1 307 Temporary Redirect"
+2026-04-06 22:04:00,202 [INFO] HTTP Request: HEAD https://huggingface.co/datasets/cardiffnlp/tweet_eval/resolve/b3a375baf0f409c77e6bc7aa35102b7b3534f8be/.huggingface.yaml "HTTP/1.1 404 Not Found"
+2026-04-06 22:04:00,469 [INFO] HTTP Request: GET https://datasets-server.huggingface.co/info?dataset=tweet_eval "HTTP/1.1 404 Not Found"
+2026-04-06 22:04:00,627 [INFO] HTTP Request: GET https://huggingface.co/api/datasets/tweet_eval/tree/b3a375baf0f409c77e6bc7aa35102b7b3534f8be/emoji?recursive=true&expand=false "HTTP/1.1 307 Temporary Redirect"
+2026-04-06 22:04:00,793 [INFO] HTTP Request: GET https://huggingface.co/api/datasets/cardiffnlp/tweet_eval/tree/b3a375baf0f409c77e6bc7aa35102b7b3534f8be/emoji?recursive=true&expand=false "HTTP/1.1 200 OK"
+2026-04-06 22:04:00,955 [INFO] HTTP Request: GET https://huggingface.co/api/datasets/tweet_eval/tree/b3a375baf0f409c77e6bc7aa35102b7b3534f8be?recursive=false&expand=false "HTTP/1.1 307 Temporary Redirect"
+2026-04-06 22:04:01,111 [INFO] HTTP Request: GET https://huggingface.co/api/datasets/cardiffnlp/tweet_eval/tree/b3a375baf0f409c77e6bc7aa35102b7b3534f8be?recursive=false&expand=false "HTTP/1.1 200 OK"
+2026-04-06 22:04:01,291 [INFO] HTTP Request: HEAD https://huggingface.co/datasets/tweet_eval/resolve/b3a375baf0f409c77e6bc7aa35102b7b3534f8be/dataset_infos.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-06 22:04:01,456 [INFO] HTTP Request: HEAD https://huggingface.co/datasets/cardiffnlp/tweet_eval/resolve/b3a375baf0f409c77e6bc7aa35102b7b3534f8be/dataset_infos.json "HTTP/1.1 404 Not Found"
+2026-04-06 22:04:01,616 [INFO] HTTP Request: GET https://huggingface.co/api/datasets/tweet_eval/tree/b3a375baf0f409c77e6bc7aa35102b7b3534f8be/sentiment?recursive=true&expand=false "HTTP/1.1 307 Temporary Redirect"
+2026-04-06 22:04:01,774 [INFO] HTTP Request: GET https://huggingface.co/api/datasets/cardiffnlp/tweet_eval/tree/b3a375baf0f409c77e6bc7aa35102b7b3534f8be/sentiment?recursive=true&expand=false "HTTP/1.1 200 OK"
+2026-04-06 22:04:02,060 [INFO] TweetEval loaded: 59899 rows
+2026-04-06 22:04:02,359 [INFO] Raw TweetEval saved -> data\raw\tweeteval_raw.csv
+2026-04-06 22:04:02,360 [INFO] Downloading disaster tweets dataset ...
+2026-04-06 22:04:02,523 [INFO] HTTP Request: HEAD https://huggingface.co/datasets/disaster_response_messages/resolve/main/README.md "HTTP/1.1 307 Temporary Redirect"
+2026-04-06 22:04:02,684 [INFO] HTTP Request: HEAD https://huggingface.co/datasets/community-datasets/disaster_response_messages/resolve/main/README.md "HTTP/1.1 307 Temporary Redirect"
+2026-04-06 22:04:02,692 [INFO] HTTP Request: HEAD https://huggingface.co/api/resolve-cache/datasets/community-datasets/disaster_response_messages/c62813f72d9723bcbc3e3075fc0d149ca9981077/README.md "HTTP/1.1 200 OK"
+2026-04-06 22:04:02,851 [INFO] HTTP Request: HEAD https://huggingface.co/datasets/disaster_response_messages/resolve/c62813f72d9723bcbc3e3075fc0d149ca9981077/disaster_response_messages.py "HTTP/1.1 307 Temporary Redirect"
+2026-04-06 22:04:03,008 [INFO] HTTP Request: HEAD https://huggingface.co/datasets/community-datasets/disaster_response_messages/resolve/c62813f72d9723bcbc3e3075fc0d149ca9981077/disaster_response_messages.py "HTTP/1.1 404 Not Found"
+2026-04-06 22:04:03,153 [INFO] HTTP Request: HEAD https://s3.amazonaws.com/datasets.huggingface.co/datasets/datasets/disaster_response_messages/disaster_response_messages.py "HTTP/1.1 404 Not Found"
+2026-04-06 22:04:03,337 [INFO] HTTP Request: GET https://huggingface.co/api/datasets/disaster_response_messages/revision/c62813f72d9723bcbc3e3075fc0d149ca9981077 "HTTP/1.1 307 Temporary Redirect"
+2026-04-06 22:04:03,495 [INFO] HTTP Request: GET https://huggingface.co/api/datasets/community-datasets/disaster_response_messages/revision/c62813f72d9723bcbc3e3075fc0d149ca9981077 "HTTP/1.1 200 OK"
+2026-04-06 22:04:03,651 [INFO] HTTP Request: HEAD https://huggingface.co/datasets/disaster_response_messages/resolve/c62813f72d9723bcbc3e3075fc0d149ca9981077/.huggingface.yaml "HTTP/1.1 307 Temporary Redirect"
+2026-04-06 22:04:03,807 [INFO] HTTP Request: HEAD https://huggingface.co/datasets/community-datasets/disaster_response_messages/resolve/c62813f72d9723bcbc3e3075fc0d149ca9981077/.huggingface.yaml "HTTP/1.1 404 Not Found"
+2026-04-06 22:04:03,981 [INFO] HTTP Request: GET https://datasets-server.huggingface.co/info?dataset=disaster_response_messages "HTTP/1.1 404 Not Found"
+2026-04-06 22:04:04,149 [INFO] HTTP Request: GET https://huggingface.co/api/datasets/disaster_response_messages/tree/c62813f72d9723bcbc3e3075fc0d149ca9981077/data?recursive=true&expand=false "HTTP/1.1 307 Temporary Redirect"
+2026-04-06 22:04:04,311 [INFO] HTTP Request: GET https://huggingface.co/api/datasets/community-datasets/disaster_response_messages/tree/c62813f72d9723bcbc3e3075fc0d149ca9981077/data?recursive=true&expand=false "HTTP/1.1 200 OK"
+2026-04-06 22:04:04,468 [INFO] HTTP Request: GET https://huggingface.co/api/datasets/disaster_response_messages/tree/c62813f72d9723bcbc3e3075fc0d149ca9981077?recursive=false&expand=false "HTTP/1.1 307 Temporary Redirect"
+2026-04-06 22:04:04,622 [INFO] HTTP Request: GET https://huggingface.co/api/datasets/community-datasets/disaster_response_messages/tree/c62813f72d9723bcbc3e3075fc0d149ca9981077?recursive=false&expand=false "HTTP/1.1 200 OK"
+2026-04-06 22:04:04,798 [INFO] HTTP Request: HEAD https://huggingface.co/datasets/disaster_response_messages/resolve/c62813f72d9723bcbc3e3075fc0d149ca9981077/dataset_infos.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-06 22:04:04,961 [INFO] HTTP Request: HEAD https://huggingface.co/datasets/community-datasets/disaster_response_messages/resolve/c62813f72d9723bcbc3e3075fc0d149ca9981077/dataset_infos.json "HTTP/1.1 404 Not Found"
+2026-04-06 22:04:05,032 [INFO] Disaster tweets loaded: 21046 rows
+2026-04-06 22:04:05,152 [INFO] Raw disaster data saved -> data\raw\disaster_raw.csv
+2026-04-06 22:04:06,557 [INFO] Removed 1 empty rows after cleaning
+2026-04-06 22:04:06,557 [INFO] --- Quality checks: general (pre-dedup) ---
+2026-04-06 22:04:06,559 [INFO] Missing values: {'text': 0, 'sentiment': 0, 'source_domain': 0}
+2026-04-06 22:04:06,563 [INFO] Empty texts: 0
+2026-04-06 22:04:06,811 [INFO] Avg length: 18.3 tokens | too short: 12 | too long: 0
+2026-04-06 22:04:06,818 [INFO] Class distribution: {'neutral': 27479, 'positive': 21043, 'negative': 11377}
+2026-04-06 22:04:06,836 [INFO] Exact duplicate tweets: 30 (0.1%)
+2026-04-06 22:04:06,837 [INFO] --- Quality checks: domain  (pre-dedup) ---
+2026-04-06 22:04:06,838 [INFO] Missing values: {'text': 0, 'sentiment': 0, 'source_domain': 0}
+2026-04-06 22:04:06,841 [INFO] Empty texts: 0
+2026-04-06 22:04:06,930 [INFO] Avg length: 23.7 tokens | too short: 9 | too long: 37
+2026-04-06 22:04:06,934 [INFO] Class distribution: {'neutral': 21045}
+2026-04-06 22:04:06,940 [INFO] Exact duplicate tweets: 69 (0.3%)
+2026-04-06 22:04:06,961 [INFO] Duplicates removed: 30 (0.1%)
+2026-04-06 22:04:07,144 [INFO] Length filter removed 12 rows (min=2, max=300)
+2026-04-06 22:04:07,160 [INFO] Duplicates removed: 69 (0.3%)
+2026-04-06 22:04:07,241 [INFO] Length filter removed 45 rows (min=2, max=300)
+2026-04-06 22:04:08,747 [INFO] Split -> train: 41899 | val: 8979 | test: 8979
+2026-04-06 22:04:09,117 [INFO] Cleaned datasets saved to 'data/'
+2026-04-06 22:04:09,421 [INFO] --- Data Statistics Report ---
+2026-04-06 22:04:09,421 [INFO] [train] rows=41899 | avg_len=18.3 | classes={'neutral': 19217, 'positive': 14720, 'negative': 7962}
+2026-04-06 22:04:09,422 [INFO] [validation] rows=8979 | avg_len=18.4 | classes={'neutral': 4119, 'positive': 3154, 'negative': 1706}
+2026-04-06 22:04:09,422 [INFO] [test_general] rows=8979 | avg_len=18.4 | classes={'neutral': 4118, 'positive': 3155, 'negative': 1706}
+2026-04-06 22:04:09,422 [INFO] [test_domain_shift] rows=20931 | avg_len=22.7 | classes={'neutral': 20931}
+2026-04-06 22:04:09,424 [INFO] Statistics report saved -> data\reports\data_statistics.json
+2026-04-06 22:04:09,424 [INFO] --- Quality checks: train (final) ---
+2026-04-06 22:04:09,425 [INFO] Missing values: {'text': 0, 'sentiment': 0, 'source_domain': 0}
+2026-04-06 22:04:09,430 [INFO] Empty texts: 0
+2026-04-06 22:04:09,561 [INFO] Avg length: 18.3 tokens | too short: 0 | too long: 0
+2026-04-06 22:04:09,566 [INFO] Class distribution: {'neutral': 19217, 'positive': 14720, 'negative': 7962}
+2026-04-06 22:04:09,579 [INFO] Exact duplicate tweets: 0 (0.0%)
+2026-04-06 22:04:09,579 [INFO] --- Quality checks: domain_shift (final) ---
+2026-04-06 22:04:09,581 [INFO] Missing values: {'text': 0, 'sentiment': 0, 'source_domain': 0}
+2026-04-06 22:04:09,583 [INFO] Empty texts: 0
+2026-04-06 22:04:09,657 [INFO] Avg length: 22.7 tokens | too short: 0 | too long: 0
+2026-04-06 22:04:09,660 [INFO] Class distribution: {'neutral': 20931}
+2026-04-06 22:04:09,666 [INFO] Exact duplicate tweets: 0 (0.0%)
+2026-04-06 22:04:09,667 [INFO] ======= Sentiment Data Pipeline COMPLETE =======
