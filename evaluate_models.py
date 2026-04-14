@@ -2,6 +2,7 @@ import json
 import logging
 import pickle
 import re
+import hashlib
 from pathlib import Path
 from typing import Dict, List, Tuple
 
@@ -161,6 +162,30 @@ def _build_features_from_text(texts: List[str], vectorizer_path: Path):
     return X_tfidf, hstack([X_tfidf, csr_matrix(X_hand)], format="csr")
 
 
+def _sha256_file(path: Path) -> str:
+    h = hashlib.sha256()
+    with path.open("rb") as f:
+        for chunk in iter(lambda: f.read(1024 * 1024), b""):
+            h.update(chunk)
+    return h.hexdigest()
+
+
+def _verify_artifact_integrity(artifact_path: Path, reports_dir: Path) -> None:
+    manifest_path = reports_dir / "artifact_hashes.json"
+    if not manifest_path.exists():
+        log.warning("Artifact manifest missing (%s); skipping integrity check.", manifest_path.as_posix())
+        return
+    with manifest_path.open("r", encoding="utf-8") as f:
+        manifest = json.load(f)
+    expected = manifest.get("artifacts", {}).get(artifact_path.as_posix())
+    if expected is None:
+        log.warning("No manifest entry for %s; skipping integrity check.", artifact_path.as_posix())
+        return
+    actual_sha = _sha256_file(artifact_path)
+    if actual_sha != expected.get("sha256"):
+        raise ValueError(f"Integrity check failed for {artifact_path.as_posix()} (SHA256 mismatch).")
+
+
 def _pick_logreg_feature_input(
     model, split_name: str, texts: List[str], vectorizer_path: Path
 ):
@@ -213,8 +238,19 @@ def _compute_metrics(y_true: np.ndarray, y_pred: np.ndarray) -> Dict:
             "support": int(class_support[i]),
         }
 
+    observed = np.unique(y_true)
+    majority_baseline_accuracy = float(np.max(np.bincount(y_true)) / len(y_true))
+    notes = []
+    if observed.size < len(LABEL_IDS):
+        missing_labels = [ID_TO_LABEL[i] for i in LABEL_IDS if i not in observed]
+        notes.append(
+            "Single/partial-class split detected; macro/per-class metrics are less representative. "
+            f"Missing labels in ground truth: {missing_labels}"
+        )
+
     return {
         "accuracy": float(acc),
+        "majority_baseline_accuracy": majority_baseline_accuracy,
         "macro": {
             "precision": float(macro_p),
             "recall": float(macro_r),
@@ -226,25 +262,31 @@ def _compute_metrics(y_true: np.ndarray, y_pred: np.ndarray) -> Dict:
             "f1": float(weighted_f1),
         },
         "per_class": per_class,
+        "observed_labels": [ID_TO_LABEL[int(i)] for i in observed],
+        "notes": notes,
         "confusion_matrix": cm.tolist(),
     }
 
 
 def _plot_accuracy_bar(results: Dict, out_path: Path) -> None:
-    general_val = results["logistic_regression"]["general_test"]["accuracy"]
-    domain_val = results["logistic_regression"]["domain_shift_test"]["accuracy"]
+    model_keys = [k for k in results.keys() if k != "label_mapping"]
+    if not model_keys:
+        return
 
-    labels = ["General test", "Domain shift test"]
-    values = [general_val, domain_val]
-    x = np.arange(len(labels))
+    x = np.arange(len(model_keys))
+    width = 0.35
+    general_vals = [results[m]["general_test"]["accuracy"] for m in model_keys]
+    domain_vals = [results[m]["domain_shift_test"]["accuracy"] for m in model_keys]
 
-    fig, ax = plt.subplots(figsize=(7, 5))
-    ax.bar(x, values, width=0.5)
+    fig, ax = plt.subplots(figsize=(8, 5))
+    ax.bar(x - width / 2, general_vals, width=width, label="General test")
+    ax.bar(x + width / 2, domain_vals, width=width, label="Domain shift test")
     ax.set_xticks(x)
-    ax.set_xticklabels(labels)
+    ax.set_xticklabels(model_keys, rotation=15, ha="right")
     ax.set_ylim(0, 1.0)
     ax.set_ylabel("Accuracy")
-    ax.set_title("Logistic Regression Accuracy Across Test Sets")
+    ax.set_title("Model Accuracy Across Test Sets")
+    ax.legend()
     ax.grid(axis="y", linestyle="--", alpha=0.3)
     fig.tight_layout()
     fig.savefig(out_path, dpi=200)
@@ -263,16 +305,16 @@ def _plot_confusion_matrix(cm: np.ndarray, title: str, out_path: Path) -> None:
     log.info("Saved confusion matrix plot -> %s", out_path.as_posix())
 
 
-def _plot_f1_per_class(results: Dict, out_path: Path) -> None:
+def _plot_f1_per_class(results: Dict, model_key: str, out_path: Path) -> None:
     classes = LABEL_ORDER
     x = np.arange(len(classes))
     width = 0.35
 
     general_vals = [
-        results["logistic_regression"]["general_test"]["per_class"][c]["f1"] for c in classes
+        results[model_key]["general_test"]["per_class"][c]["f1"] for c in classes
     ]
     domain_vals = [
-        results["logistic_regression"]["domain_shift_test"]["per_class"][c]["f1"] for c in classes
+        results[model_key]["domain_shift_test"]["per_class"][c]["f1"] for c in classes
     ]
 
     fig, ax = plt.subplots(figsize=(8, 5))
@@ -283,7 +325,7 @@ def _plot_f1_per_class(results: Dict, out_path: Path) -> None:
     ax.set_xticklabels(classes)
     ax.set_ylim(0, 1.0)
     ax.set_ylabel("F1-score")
-    ax.set_title("Per-Class F1-score for Logistic Regression")
+    ax.set_title(f"Per-Class F1-score for {model_key}")
     ax.legend()
     ax.grid(axis="y", linestyle="--", alpha=0.3)
     fig.tight_layout()
@@ -295,9 +337,12 @@ def _plot_f1_per_class(results: Dict, out_path: Path) -> None:
 def evaluate_logistic_regression(
     logreg_model_path: Path,
     vectorizer_path: Path,
+    reports_dir: Path,
     general_df: pd.DataFrame,
     domain_df: pd.DataFrame,
 ) -> Dict:
+    _verify_artifact_integrity(logreg_model_path, reports_dir)
+    _verify_artifact_integrity(vectorizer_path, reports_dir)
     with logreg_model_path.open("rb") as f:
         model = pickle.load(f)
 
@@ -319,7 +364,7 @@ def evaluate_logistic_regression(
     }
 
 
-def _predict_distilbert(
+def _predict_twitter_roberta(
     model, tokenizer, texts: List[str], labels: np.ndarray, device: torch.device, batch_size: int = 32
 ) -> np.ndarray:
     ds = TextDataset(texts, labels, tokenizer, max_length=128)
@@ -337,12 +382,24 @@ def _predict_distilbert(
     return np.concatenate(all_preds)
 
 
-def evaluate_distilbert(distilbert_dir: Path, general_df: pd.DataFrame, domain_df: pd.DataFrame) -> Dict:
-    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    log.info("Evaluating DistilBERT on device: %s", device)
+def evaluate_twitter_roberta(model_dir: Path, general_df: pd.DataFrame, domain_df: pd.DataFrame) -> Dict:
+    reports_dir = Path("data/reports")
+    for f in [
+        model_dir / "config.json",
+        model_dir / "model.safetensors",
+        model_dir / "tokenizer.json",
+        model_dir / "tokenizer_config.json",
+        model_dir / "vocab.json",
+        model_dir / "merges.txt",
+    ]:
+        if f.exists():
+            _verify_artifact_integrity(f, reports_dir)
 
-    tokenizer = AutoTokenizer.from_pretrained(distilbert_dir)
-    model = AutoModelForSequenceClassification.from_pretrained(distilbert_dir)
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    log.info("Evaluating Twitter-RoBERTa on device: %s", device)
+
+    tokenizer = AutoTokenizer.from_pretrained(model_dir)
+    model = AutoModelForSequenceClassification.from_pretrained(model_dir)
     model.to(device)
 
     y_general = _labels_from_df(general_df)
@@ -350,8 +407,8 @@ def evaluate_distilbert(distilbert_dir: Path, general_df: pd.DataFrame, domain_d
     general_texts = general_df["text"].fillna("").astype(str).tolist()
     domain_texts = domain_df["text"].fillna("").astype(str).tolist()
 
-    y_pred_general = _predict_distilbert(model, tokenizer, general_texts, y_general, device)
-    y_pred_domain = _predict_distilbert(model, tokenizer, domain_texts, y_domain, device)
+    y_pred_general = _predict_twitter_roberta(model, tokenizer, general_texts, y_general, device)
+    y_pred_domain = _predict_twitter_roberta(model, tokenizer, domain_texts, y_domain, device)
 
     return {
         "device": str(device),
@@ -362,19 +419,21 @@ def evaluate_distilbert(distilbert_dir: Path, general_df: pd.DataFrame, domain_d
 
 def _print_summary_table(results: Dict) -> None:
     rows = []
-    for split_name in ["general_test", "domain_shift_test"]:
-        m = results["logistic_regression"][split_name]
-        rows.append(
-            {
-                "model": "logistic_regression",
-                "dataset": split_name,
-                "accuracy": round(m["accuracy"], 4),
-                "macro_f1": round(m["macro"]["f1"], 4),
-                "weighted_f1": round(m["weighted"]["f1"], 4),
-                "macro_precision": round(m["macro"]["precision"], 4),
-                "macro_recall": round(m["macro"]["recall"], 4),
-            }
-        )
+    model_keys = [k for k in results.keys() if k != "label_mapping"]
+    for model_key in model_keys:
+        for split_name in ["general_test", "domain_shift_test"]:
+            m = results[model_key][split_name]
+            rows.append(
+                {
+                    "model": model_key,
+                    "dataset": split_name,
+                    "accuracy": round(m["accuracy"], 4),
+                    "macro_f1": round(m["macro"]["f1"], 4),
+                    "weighted_f1": round(m["weighted"]["f1"], 4),
+                    "macro_precision": round(m["macro"]["precision"], 4),
+                    "macro_recall": round(m["macro"]["recall"], 4),
+                }
+            )
 
     summary_df = pd.DataFrame(rows)
     print("\n=== Evaluation Summary ===")
@@ -406,22 +465,38 @@ def main() -> None:
     results = {
         "label_mapping": LABEL_TO_ID,
         "logistic_regression": evaluate_logistic_regression(
-            logreg_path, vectorizer_path, general_df, domain_df
+            logreg_path, vectorizer_path, reports_dir, general_df, domain_df
         ),
     }
+    twitter_roberta_dir = Path("models/twitter_roberta_sentiment")
+    if twitter_roberta_dir.exists():
+        results["twitter_roberta"] = evaluate_twitter_roberta(
+            twitter_roberta_dir, general_df, domain_df
+        )
+    else:
+        log.warning(
+            "Twitter-RoBERTa directory not found at %s; skipping transformer evaluation.",
+            twitter_roberta_dir.as_posix(),
+        )
 
     _plot_accuracy_bar(results, plots_dir / "accuracy_comparison_general_vs_domain.png")
 
-    for split_name, split_label in [
-        ("general_test", "General Test"),
-        ("domain_shift_test", "Domain Shift Test"),
-    ]:
-        cm = np.array(results["logistic_regression"][split_name]["confusion_matrix"])
-        file_name = f"confusion_matrix_logistic_regression_{split_name}.png"
-        title = f"logistic_regression - {split_label}"
-        _plot_confusion_matrix(cm, title, plots_dir / file_name)
+    model_keys = [k for k in results.keys() if k != "label_mapping"]
+    for model_key in model_keys:
+        for split_name, split_label in [
+            ("general_test", "General Test"),
+            ("domain_shift_test", "Domain Shift Test"),
+        ]:
+            cm = np.array(results[model_key][split_name]["confusion_matrix"])
+            file_name = f"confusion_matrix_{model_key}_{split_name}.png"
+            title = f"{model_key} - {split_label}"
+            _plot_confusion_matrix(cm, title, plots_dir / file_name)
 
-    _plot_f1_per_class(results, plots_dir / "f1_score_per_class_comparison.png")
+        _plot_f1_per_class(
+            results,
+            model_key=model_key,
+            out_path=plots_dir / f"f1_score_per_class_{model_key}.png",
+        )
 
     results_path = reports_dir / "evaluation_results.json"
     with results_path.open("w", encoding="utf-8") as f:

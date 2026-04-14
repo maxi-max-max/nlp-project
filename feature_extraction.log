@@ -37,3 +37,18 @@
 2026-04-06 22:34:03,215 [INFO] Saved feature matrices to data/features
 2026-04-06 22:34:03,320 [INFO] Saved feature report to data/reports/feature_report.json
 2026-04-06 22:34:03,321 [INFO] Feature extraction pipeline complete
+2026-04-14 21:19:28,884 [WARNING] emoji package not available; using fallback regex for emoji count.
+2026-04-14 21:19:28,884 [INFO] Starting feature extraction pipeline
+2026-04-14 21:19:28,998 [INFO] Loaded data/train/tweets_general_train.csv with 41899 rows
+2026-04-14 21:19:29,020 [INFO] Loaded data/train/tweets_general_val.csv with 8979 rows
+2026-04-14 21:19:29,042 [INFO] Loaded data/train/tweets_general_test.csv with 8979 rows
+2026-04-14 21:19:29,086 [INFO] Loaded data/test_domain_shift/tweets_disaster.csv with 20931 rows
+2026-04-14 21:19:29,086 [INFO] Fitting TF-IDF vectorizer on training text
+2026-04-14 21:19:33,316 [INFO] TF-IDF matrices built (vocab size=50000)
+2026-04-14 21:19:33,316 [INFO] Extracting handcrafted tweet-level features
+2026-04-14 21:19:34,601 [INFO] Combining TF-IDF and handcrafted features
+2026-04-14 21:19:34,732 [INFO] Saved TF-IDF vectorizer to models/tfidf_vectorizer.pkl
+2026-04-14 21:19:34,748 [INFO] Updated artifact hash manifest -> data/reports/artifact_hashes.json
+2026-04-14 21:19:36,151 [INFO] Saved feature matrices to data/features
+2026-04-14 21:19:36,194 [INFO] Saved feature report to data/reports/feature_report.json
+2026-04-14 21:19:36,194 [INFO] Feature extraction pipeline complete
