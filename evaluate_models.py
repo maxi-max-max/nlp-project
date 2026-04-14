@@ -231,22 +231,20 @@ def _compute_metrics(y_true: np.ndarray, y_pred: np.ndarray) -> Dict:
 
 
 def _plot_accuracy_bar(results: Dict, out_path: Path) -> None:
-    models = ["logistic_regression", "distilbert"]
-    general_vals = [results[m]["general_test"]["accuracy"] for m in models]
-    domain_vals = [results[m]["domain_shift_test"]["accuracy"] for m in models]
+    general_val = results["logistic_regression"]["general_test"]["accuracy"]
+    domain_val = results["logistic_regression"]["domain_shift_test"]["accuracy"]
 
-    x = np.arange(len(models))
-    width = 0.36
+    labels = ["General test", "Domain shift test"]
+    values = [general_val, domain_val]
+    x = np.arange(len(labels))
 
-    fig, ax = plt.subplots(figsize=(8, 5))
-    ax.bar(x - width / 2, general_vals, width=width, label="General test")
-    ax.bar(x + width / 2, domain_vals, width=width, label="Domain shift test")
+    fig, ax = plt.subplots(figsize=(7, 5))
+    ax.bar(x, values, width=0.5)
     ax.set_xticks(x)
-    ax.set_xticklabels(["LogReg", "DistilBERT"])
+    ax.set_xticklabels(labels)
     ax.set_ylim(0, 1.0)
     ax.set_ylabel("Accuracy")
-    ax.set_title("Model Accuracy: General vs Domain Shift")
-    ax.legend()
+    ax.set_title("Logistic Regression Accuracy Across Test Sets")
     ax.grid(axis="y", linestyle="--", alpha=0.3)
     fig.tight_layout()
     fig.savefig(out_path, dpi=200)
@@ -268,37 +266,24 @@ def _plot_confusion_matrix(cm: np.ndarray, title: str, out_path: Path) -> None:
 def _plot_f1_per_class(results: Dict, out_path: Path) -> None:
     classes = LABEL_ORDER
     x = np.arange(len(classes))
-    width = 0.2
+    width = 0.35
 
-    series = [
-        (
-            "LogReg General",
-            [results["logistic_regression"]["general_test"]["per_class"][c]["f1"] for c in classes],
-        ),
-        (
-            "LogReg Domain",
-            [results["logistic_regression"]["domain_shift_test"]["per_class"][c]["f1"] for c in classes],
-        ),
-        (
-            "DistilBERT General",
-            [results["distilbert"]["general_test"]["per_class"][c]["f1"] for c in classes],
-        ),
-        (
-            "DistilBERT Domain",
-            [results["distilbert"]["domain_shift_test"]["per_class"][c]["f1"] for c in classes],
-        ),
+    general_vals = [
+        results["logistic_regression"]["general_test"]["per_class"][c]["f1"] for c in classes
+    ]
+    domain_vals = [
+        results["logistic_regression"]["domain_shift_test"]["per_class"][c]["f1"] for c in classes
     ]
 
-    fig, ax = plt.subplots(figsize=(10, 5))
-    offsets = [-1.5 * width, -0.5 * width, 0.5 * width, 1.5 * width]
-    for i, (name, vals) in enumerate(series):
-        ax.bar(x + offsets[i], vals, width=width, label=name)
+    fig, ax = plt.subplots(figsize=(8, 5))
+    ax.bar(x - width / 2, general_vals, width=width, label="General test")
+    ax.bar(x + width / 2, domain_vals, width=width, label="Domain shift test")
 
     ax.set_xticks(x)
     ax.set_xticklabels(classes)
     ax.set_ylim(0, 1.0)
     ax.set_ylabel("F1-score")
-    ax.set_title("Per-Class F1-score Comparison")
+    ax.set_title("Per-Class F1-score for Logistic Regression")
     ax.legend()
     ax.grid(axis="y", linestyle="--", alpha=0.3)
     fig.tight_layout()
@@ -377,20 +362,19 @@ def evaluate_distilbert(distilbert_dir: Path, general_df: pd.DataFrame, domain_d
 
 def _print_summary_table(results: Dict) -> None:
     rows = []
-    for model_name in ["logistic_regression", "distilbert"]:
-        for split_name in ["general_test", "domain_shift_test"]:
-            m = results[model_name][split_name]
-            rows.append(
-                {
-                    "model": model_name,
-                    "dataset": split_name,
-                    "accuracy": round(m["accuracy"], 4),
-                    "macro_f1": round(m["macro"]["f1"], 4),
-                    "weighted_f1": round(m["weighted"]["f1"], 4),
-                    "macro_precision": round(m["macro"]["precision"], 4),
-                    "macro_recall": round(m["macro"]["recall"], 4),
-                }
-            )
+    for split_name in ["general_test", "domain_shift_test"]:
+        m = results["logistic_regression"][split_name]
+        rows.append(
+            {
+                "model": "logistic_regression",
+                "dataset": split_name,
+                "accuracy": round(m["accuracy"], 4),
+                "macro_f1": round(m["macro"]["f1"], 4),
+                "weighted_f1": round(m["weighted"]["f1"], 4),
+                "macro_precision": round(m["macro"]["precision"], 4),
+                "macro_recall": round(m["macro"]["recall"], 4),
+            }
+        )
 
     summary_df = pd.DataFrame(rows)
     print("\n=== Evaluation Summary ===")
@@ -411,13 +395,12 @@ def main() -> None:
     domain_df = _load_csv(domain_test_path)
 
     logreg_path = _resolve_existing_path(
-        ["models/logreg_model.pkl", "models/logreg_tfidf.pkl"], "Logistic Regression model"
+        ["models/logreg_model.pkl", "models/logreg_tfidf.pkl"],
+        "Logistic Regression model"
     )
     vectorizer_path = _resolve_existing_path(
-        ["models/tfidf_vectorizer.pkl"], "TF-IDF vectorizer"
-    )
-    distilbert_dir = _resolve_existing_path(
-        ["models/distilbert", "models/distilbert_sentiment"], "DistilBERT model directory"
+        ["models/tfidf_vectorizer.pkl"],
+        "TF-IDF vectorizer"
     )
 
     results = {
@@ -425,20 +408,18 @@ def main() -> None:
         "logistic_regression": evaluate_logistic_regression(
             logreg_path, vectorizer_path, general_df, domain_df
         ),
-        "distilbert": evaluate_distilbert(distilbert_dir, general_df, domain_df),
     }
 
     _plot_accuracy_bar(results, plots_dir / "accuracy_comparison_general_vs_domain.png")
 
-    for model_name in ["logistic_regression", "distilbert"]:
-        for split_name, split_label in [
-            ("general_test", "General Test"),
-            ("domain_shift_test", "Domain Shift Test"),
-        ]:
-            cm = np.array(results[model_name][split_name]["confusion_matrix"])
-            file_name = f"confusion_matrix_{model_name}_{split_name}.png"
-            title = f"{model_name} - {split_label}"
-            _plot_confusion_matrix(cm, title, plots_dir / file_name)
+    for split_name, split_label in [
+        ("general_test", "General Test"),
+        ("domain_shift_test", "Domain Shift Test"),
+    ]:
+        cm = np.array(results["logistic_regression"][split_name]["confusion_matrix"])
+        file_name = f"confusion_matrix_logistic_regression_{split_name}.png"
+        title = f"logistic_regression - {split_label}"
+        _plot_confusion_matrix(cm, title, plots_dir / file_name)
 
     _plot_f1_per_class(results, plots_dir / "f1_score_per_class_comparison.png")
 
