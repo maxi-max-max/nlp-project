@@ -1,0 +1,109 @@
+{
+  "label_mapping": {
+    "negative": 0,
+    "neutral": 1,
+    "positive": 2
+  },
+  "logistic_regression": {
+    "general_test": {
+      "accuracy": 0.6704532798752645,
+      "macro": {
+        "precision": 0.668805658690563,
+        "recall": 0.6242959622046396,
+        "f1": 0.638075265683161
+      },
+      "weighted": {
+        "precision": 0.6715879690861064,
+        "recall": 0.6704532798752645,
+        "f1": 0.6647394984549869
+      },
+      "per_class": {
+        "negative": {
+          "precision": 0.6366782006920415,
+          "recall": 0.43141852286049237,
+          "f1": 0.5143256464011181,
+          "support": 1706
+        },
+        "neutral": {
+          "precision": 0.6464065708418891,
+          "recall": 0.7644487615347256,
+          "f1": 0.7004895416110369,
+          "support": 4118
+        },
+        "positive": {
+          "precision": 0.7233322045377583,
+          "recall": 0.6770206022187005,
+          "f1": 0.6994106090373281,
+          "support": 3155
+        }
+      },
+      "confusion_matrix": [
+        [
+          736,
+          796,
+          174
+        ],
+        [
+          327,
+          3148,
+          643
+        ],
+        [
+          93,
+          926,
+          2136
+        ]
+      ]
+    },
+    "domain_shift_test": {
+      "accuracy": 0.6935167932731355,
+      "macro": {
+        "precision": 0.3333333333333333,
+        "recall": 0.23117226442437852,
+        "f1": 0.27300852916560875
+      },
+      "weighted": {
+        "precision": 1.0,
+        "recall": 0.6935167932731355,
+        "f1": 0.8190255874968263
+      },
+      "per_class": {
+        "negative": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 0
+        },
+        "neutral": {
+          "precision": 1.0,
+          "recall": 0.6935167932731355,
+          "f1": 0.8190255874968263,
+          "support": 20931
+        },
+        "positive": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 0
+        }
+      },
+      "confusion_matrix": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          4204,
+          14516,
+          2211
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ]
+    }
+  }
+}
