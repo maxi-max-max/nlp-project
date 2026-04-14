@@ -1,6 +1,7 @@
 import json
 import logging
 import pickle
+import hashlib
 from pathlib import Path
 from typing import Dict, List, Tuple
 
@@ -31,6 +32,7 @@ log = logging.getLogger(__name__)
 
 LABEL_TO_ID = {"negative": 0, "neutral": 1, "positive": 2}
 ID_TO_LABEL = {v: k for k, v in LABEL_TO_ID.items()}
+TWITTER_ROBERTA_MODEL = "cardiffnlp/twitter-roberta-base-sentiment-latest"
 
 
 def _ensure_dirs() -> Tuple[Path, Path]:
@@ -39,6 +41,35 @@ def _ensure_dirs() -> Tuple[Path, Path]:
     models_dir.mkdir(parents=True, exist_ok=True)
     reports_dir.mkdir(parents=True, exist_ok=True)
     return models_dir, reports_dir
+
+
+def _sha256_file(path: Path) -> str:
+    h = hashlib.sha256()
+    with path.open("rb") as f:
+        for chunk in iter(lambda: f.read(1024 * 1024), b""):
+            h.update(chunk)
+    return h.hexdigest()
+
+
+def _update_artifact_manifest(reports_dir: Path, artifacts: List[Path]) -> None:
+    manifest_path = reports_dir / "artifact_hashes.json"
+    if manifest_path.exists():
+        with manifest_path.open("r", encoding="utf-8") as f:
+            manifest = json.load(f)
+    else:
+        manifest = {"updated_at": None, "artifacts": {}}
+
+    entries = manifest.setdefault("artifacts", {})
+    for artifact in artifacts:
+        entries[artifact.as_posix()] = {
+            "sha256": _sha256_file(artifact),
+            "size_bytes": artifact.stat().st_size,
+        }
+
+    manifest["updated_at"] = pd.Timestamp.utcnow().isoformat()
+    with manifest_path.open("w", encoding="utf-8") as f:
+        json.dump(manifest, f, indent=2)
+    log.info("Updated artifact hash manifest -> %s", manifest_path.as_posix())
 
 
 def _load_labels(csv_path: Path) -> np.ndarray:
@@ -102,7 +133,7 @@ class SentimentTextDataset(Dataset):
 
 
 def train_logistic_regression(
-    X_train, y_train: np.ndarray, X_val, y_val: np.ndarray, models_dir: Path
+    X_train, y_train: np.ndarray, X_val, y_val: np.ndarray, models_dir: Path, reports_dir: Path
 ) -> Dict:
     log.info("Training Logistic Regression baseline on saved TF-IDF features")
     # sklearn >= 1.8: `multi_class` was removed; multiclass is handled automatically.
@@ -121,6 +152,7 @@ def train_logistic_regression(
     with out_path.open("wb") as f:
         pickle.dump(model, f)
     log.info("Saved Logistic Regression model to %s", out_path.as_posix())
+    _update_artifact_manifest(reports_dir, [out_path])
 
     return {
         "model_name": "tfidf_logistic_regression",
@@ -129,7 +161,7 @@ def train_logistic_regression(
     }
 
 
-def evaluate_distilbert(
+def evaluate_twitter_roberta(
     model: AutoModelForSequenceClassification, loader: DataLoader, device: torch.device
 ) -> Dict[str, float]:
     model.eval()
@@ -159,22 +191,23 @@ def evaluate_distilbert(
     return {"loss": float(avg_loss), "accuracy": float(acc)}
 
 
-def train_distilbert(
+def train_twitter_roberta(
     train_texts: List[str],
     y_train: np.ndarray,
     val_texts: List[str],
     y_val: np.ndarray,
     models_dir: Path,
+    reports_dir: Path,
     batch_size: int = 32,
     learning_rate: float = 2e-5,
     epochs: int = 3,
 ) -> Dict:
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    log.info("Training DistilBERT on device: %s", device)
+    log.info("Training Twitter-RoBERTa on device: %s", device)
 
-    tokenizer = AutoTokenizer.from_pretrained("distilbert-base-uncased")
+    tokenizer = AutoTokenizer.from_pretrained(TWITTER_ROBERTA_MODEL)
     model = AutoModelForSequenceClassification.from_pretrained(
-        "distilbert-base-uncased",
+        TWITTER_ROBERTA_MODEL,
         num_labels=3,
         id2label=ID_TO_LABEL,
         label2id=LABEL_TO_ID,
@@ -215,12 +248,12 @@ def train_distilbert(
             running_loss += loss.item()
 
         train_loss = running_loss / max(1, len(train_loader))
-        val_metrics = evaluate_distilbert(model, val_loader, device)
+        val_metrics = evaluate_twitter_roberta(model, val_loader, device)
         val_loss = val_metrics["loss"]
         val_acc = val_metrics["accuracy"]
 
         log.info(
-            "DistilBERT epoch %d/%d - train_loss: %.4f - val_loss: %.4f - val_acc: %.4f",
+            "Twitter-RoBERTa epoch %d/%d - train_loss: %.4f - val_loss: %.4f - val_acc: %.4f",
             epoch,
             epochs,
             train_loss,
@@ -236,14 +269,23 @@ def train_distilbert(
             }
         )
 
-    out_dir = models_dir / "distilbert_sentiment"
+    out_dir = models_dir / "twitter_roberta_sentiment"
     out_dir.mkdir(parents=True, exist_ok=True)
     model.save_pretrained(out_dir)
     tokenizer.save_pretrained(out_dir)
-    log.info("Saved DistilBERT model to %s", out_dir.as_posix())
+    log.info("Saved Twitter-RoBERTa model to %s", out_dir.as_posix())
+    artifact_files = [
+        out_dir / "config.json",
+        out_dir / "model.safetensors",
+        out_dir / "tokenizer.json",
+        out_dir / "tokenizer_config.json",
+        out_dir / "vocab.json",
+        out_dir / "merges.txt",
+    ]
+    _update_artifact_manifest(reports_dir, [p for p in artifact_files if p.exists()])
 
     return {
-        "model_name": "distilbert-base-uncased",
+        "model_name": TWITTER_ROBERTA_MODEL,
         "device": str(device),
         "batch_size": batch_size,
         "learning_rate": learning_rate,
@@ -270,16 +312,19 @@ def main() -> None:
     if X_val.shape[0] != len(y_val):
         raise ValueError(f"X_val rows ({X_val.shape[0]}) != y_val size ({len(y_val)})")
 
-    logreg_result = train_logistic_regression(X_train, y_train, X_val, y_val, models_dir)
+    logreg_result = train_logistic_regression(
+        X_train, y_train, X_val, y_val, models_dir, reports_dir
+    )
 
     train_texts = _load_texts(train_csv)
     val_texts = _load_texts(val_csv)
-    distilbert_result = train_distilbert(
+    twitter_roberta_result = train_twitter_roberta(
         train_texts=train_texts,
         y_train=y_train,
         val_texts=val_texts,
         y_val=y_val,
         models_dir=models_dir,
+        reports_dir=reports_dir,
         batch_size=32,
         learning_rate=2e-5,
         epochs=3,
@@ -288,7 +333,7 @@ def main() -> None:
     history_payload = {
         "label_mapping": LABEL_TO_ID,
         "logistic_regression": logreg_result,
-        "distilbert": distilbert_result,
+        "twitter_roberta": twitter_roberta_result,
     }
     history_path = reports_dir / "training_history.json"
     with history_path.open("w", encoding="utf-8") as f:

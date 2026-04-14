@@ -1,0 +1,13 @@
+{
+  "updated_at": "2026-04-14T19:21:50.708824+00:00",
+  "artifacts": {
+    "models/tfidf_vectorizer.pkl": {
+      "sha256": "6e8623665f9cdca96a2c3e3e4702e88de43914bc5039778d326968de618a96ac",
+      "size_bytes": 1916480
+    },
+    "models/logreg_tfidf.pkl": {
+      "sha256": "6276e342379335bd9f4a5d94ab8d235b0eccef6e915cbaaed2a0dc606ba26992",
+      "size_bytes": 1200864
+    }
+  }
+}

@@ -2,6 +2,8 @@ import json
 import logging
 import pickle
 import re
+import hashlib
+from datetime import datetime, timezone
 from pathlib import Path
 
 import numpy as np
@@ -112,6 +114,35 @@ def _feature_stats(arr: np.ndarray) -> dict:
     return stats
 
 
+def _sha256_file(path: Path) -> str:
+    h = hashlib.sha256()
+    with path.open("rb") as f:
+        for chunk in iter(lambda: f.read(1024 * 1024), b""):
+            h.update(chunk)
+    return h.hexdigest()
+
+
+def _update_artifact_manifest(reports_dir: Path, artifacts: list[Path]) -> None:
+    manifest_path = reports_dir / "artifact_hashes.json"
+    if manifest_path.exists():
+        with manifest_path.open("r", encoding="utf-8") as f:
+            manifest = json.load(f)
+    else:
+        manifest = {"updated_at": None, "artifacts": {}}
+
+    entries = manifest.setdefault("artifacts", {})
+    for artifact in artifacts:
+        entries[artifact.as_posix()] = {
+            "sha256": _sha256_file(artifact),
+            "size_bytes": artifact.stat().st_size,
+        }
+
+    manifest["updated_at"] = datetime.now(timezone.utc).isoformat()
+    with manifest_path.open("w", encoding="utf-8") as f:
+        json.dump(manifest, f, indent=2)
+    log.info("Updated artifact hash manifest -> %s", manifest_path.as_posix())
+
+
 def main() -> None:
     log.info("Starting feature extraction pipeline")
 
@@ -163,6 +194,7 @@ def main() -> None:
     with vectorizer_path.open("wb") as f:
         pickle.dump(vectorizer, f)
     log.info("Saved TF-IDF vectorizer to %s", vectorizer_path.as_posix())
+    _update_artifact_manifest(reports_dir, [vectorizer_path])
 
     save_npz(features_dir / "X_train.npz", X_train)
     save_npz(features_dir / "X_val.npz", X_val)
