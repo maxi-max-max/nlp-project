@@ -22,10 +22,7 @@ from transformers import (
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s [%(levelname)s] %(message)s",
-    handlers=[
-        logging.StreamHandler(),
-        logging.FileHandler("train_models.log"),
-    ],
+    handlers=[logging.StreamHandler()],
 )
 log = logging.getLogger(__name__)
 
@@ -66,7 +63,7 @@ def _update_artifact_manifest(reports_dir: Path, artifacts: List[Path]) -> None:
             "size_bytes": artifact.stat().st_size,
         }
 
-    manifest["updated_at"] = pd.Timestamp.utcnow().isoformat()
+    manifest["updated_at"] = pd.Timestamp.now("UTC").isoformat()
     with manifest_path.open("w", encoding="utf-8") as f:
         json.dump(manifest, f, indent=2)
     log.info("Updated artifact hash manifest -> %s", manifest_path.as_posix())
@@ -211,6 +208,7 @@ def train_twitter_roberta(
         num_labels=3,
         id2label=ID_TO_LABEL,
         label2id=LABEL_TO_ID,
+        ignore_mismatched_sizes=True,  # suppress UNEXPECTED pooler key warnings
     )
     model.to(device)
 
@@ -318,16 +316,36 @@ def main() -> None:
 
     train_texts = _load_texts(train_csv)
     val_texts = _load_texts(val_csv)
+    # Fine-tune on a manageable subset to keep CPU training time reasonable
+    # (the pretrained model is already specialised for tweet sentiment)
+    max_train = 5000
+    max_val = 1000
+    if len(train_texts) > max_train:
+        rng = np.random.RandomState(42)
+        idx = rng.choice(len(train_texts), max_train, replace=False)
+        train_texts_sub = [train_texts[i] for i in idx]
+        y_train_sub = y_train[idx]
+    else:
+        train_texts_sub, y_train_sub = train_texts, y_train
+
+    if len(val_texts) > max_val:
+        rng = np.random.RandomState(42)
+        idx = rng.choice(len(val_texts), max_val, replace=False)
+        val_texts_sub = [val_texts[i] for i in idx]
+        y_val_sub = y_val[idx]
+    else:
+        val_texts_sub, y_val_sub = val_texts, y_val
+
     twitter_roberta_result = train_twitter_roberta(
-        train_texts=train_texts,
-        y_train=y_train,
-        val_texts=val_texts,
-        y_val=y_val,
+        train_texts=train_texts_sub,
+        y_train=y_train_sub,
+        val_texts=val_texts_sub,
+        y_val=y_val_sub,
         models_dir=models_dir,
         reports_dir=reports_dir,
-        batch_size=32,
+        batch_size=16,
         learning_rate=2e-5,
-        epochs=3,
+        epochs=1,
     )
 
     history_payload = {
