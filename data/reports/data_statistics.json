@@ -36,10 +36,16 @@
       "total_rows": 20931,
       "avg_tweet_length": 22.7,
       "class_distribution": {
-        "neutral": 20931
-      }
+        "positive": 8400,
+        "negative": 6733,
+        "neutral": 5798
+      },
+      "vader_relabeled": true,
+      "relabeled_at": "2026-04-18",
+      "relabeling_note": "Original dataset had all-neutral labels (topic classification). Re-labeled with VADER sentiment lexicon for valid domain-shift evaluation."
     }
   ],
   "total_general_training_data": 50878,
-  "total_domain_shift_test_data": 20931
+  "total_domain_shift_test_data": 20931,
+  "updated_at": "2026-04-18"
 }

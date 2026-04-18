@@ -1,0 +1,28 @@
+{
+  "label_mapping": {
+    "negative": 0,
+    "neutral": 1,
+    "positive": 2
+  },
+  "logistic_regression": {
+    "model_name": "tfidf_logistic_regression",
+    "validation_accuracy": 0.6511861009021049,
+    "model_path": "models/logreg_tfidf.pkl"
+  },
+  "twitter_roberta": {
+    "model_name": "cardiffnlp/twitter-roberta-base-sentiment-latest",
+    "device": "cpu",
+    "batch_size": 16,
+    "learning_rate": 2e-05,
+    "epochs": 1,
+    "model_path": "models/twitter_roberta_sentiment",
+    "history": [
+      {
+        "epoch": 1,
+        "train_loss": 0.5836703745892253,
+        "val_loss": 0.5296484480301539,
+        "val_accuracy": 0.767
+      }
+    ]
+  }
+}

@@ -1,0 +1,270 @@
+[
+  {
+    "model": "Logistic Regression",
+    "total_errors": 2963,
+    "category_counts": {
+      "other": 2256,
+      "negation": 628,
+      "emoji_text_conflict": 37,
+      "lack_of_context": 29,
+      "sarcasm_irony": 9,
+      "mixed_sentiment": 4
+    },
+    "sample_errors": [
+      {
+        "text": "SASA will be having the first ever Bhangra Bootcamp on November 7th - 10pm at CIF! Only $5 to learn from our very own NACS 2012 Champions!",
+        "true_label": "neutral",
+        "predicted_label": "positive",
+        "error_category": "other"
+      },
+      {
+        "text": "Kim Jong Un executed another top military people for falling asleep.",
+        "true_label": "negative",
+        "predicted_label": "neutral",
+        "error_category": "other"
+      },
+      {
+        "text": "Wale's content may have similarities to TPAB's but the difference is Kendrick executes it EXTREMELY better",
+        "true_label": "positive",
+        "predicted_label": "neutral",
+        "error_category": "other"
+      },
+      {
+        "text": "Kim Kardashian is one stylish mama! The star of E!'s Keeping Up With the Kardashians announced Saturday morning that she has given birth",
+        "true_label": "positive",
+        "predicted_label": "neutral",
+        "error_category": "other"
+      },
+      {
+        "text": "\"RT <USER> The guy is a nut, but I will miss Andy Rooney rambling about something ridiculous each Sunday night:",
+        "true_label": "negative",
+        "predicted_label": "neutral",
+        "error_category": "other"
+      },
+      {
+        "text": "Caltrain just can\\u2019t catch a break. MT <USER> About 10:30 a.m. train 425 struck a female on the train tracks south of 16th Street",
+        "true_label": "negative",
+        "predicted_label": "neutral",
+        "error_category": "other"
+      },
+      {
+        "text": "Pretty soon I'll just do what the rest of the conservatives are doing and just not login anymore.",
+        "true_label": "neutral",
+        "predicted_label": "negative",
+        "error_category": "negation"
+      },
+      {
+        "text": "\"Carly Fiorina isn't the 1st person 2 Xpose HillaryClinton as Corrupt Liar, but it seems the press only cares 2 give a women any PC coverage\"",
+        "true_label": "negative",
+        "predicted_label": "neutral",
+        "error_category": "negation"
+      },
+      {
+        "text": "Who wants to see Maya Rudolph sing Prince with my Thursday night",
+        "true_label": "neutral",
+        "predicted_label": "positive",
+        "error_category": "other"
+      },
+      {
+        "text": "Mr Trump win without him, he can bring Confucius in the cabinet",
+        "true_label": "negative",
+        "predicted_label": "neutral",
+        "error_category": "negation"
+      },
+      {
+        "text": "\"Kanye West, 4th member of the new day. Kan-ye sucks.\"",
+        "true_label": "negative",
+        "predicted_label": "neutral",
+        "error_category": "other"
+      },
+      {
+        "text": "<USER> <USER> Jeb Bush dug himself a deep hole with his \"Act of Love\" comment.If he was +3% yesterday, he will be -3% tomorrow",
+        "true_label": "negative",
+        "predicted_label": "neutral",
+        "error_category": "other"
+      },
+      {
+        "text": "That's why I push people who are vegans and vegetarians to take supplements! I'm pro & anti vegetarianism lol",
+        "true_label": "neutral",
+        "predicted_label": "negative",
+        "error_category": "other"
+      },
+      {
+        "text": "Also, rumor has it Maui Economic Chamber of Commerce was smooshing with Monsanto lunch in Friday. Hawaiian Politician in be with Monsanto.",
+        "true_label": "negative",
+        "predicted_label": "neutral",
+        "error_category": "other"
+      },
+      {
+        "text": "I think I may know the story of the party nail. Salina Gomez jammed her finger the night before the Grammy awards. I rock a party toe today!",
+        "true_label": "neutral",
+        "predicted_label": "positive",
+        "error_category": "other"
+      },
+      {
+        "text": "\"NEW MUSIC MONDAY on today's show features Blake Shelton \"\"Gonna\"\", Tim McGraw \"\"Top of the World\"\" and Jason Aldean...",
+        "true_label": "neutral",
+        "predicted_label": "positive",
+        "error_category": "other"
+      },
+      {
+        "text": "\\u2019No Favorites\\u2019 for Russia-Portugal Clash - Capello: MOSCOW\\u002c October 11 (RIA Novosti) - Russia\\u2019s match with Portu...",
+        "true_label": "negative",
+        "predicted_label": "neutral",
+        "error_category": "other"
+      },
+      {
+        "text": "<USER> 1st day aftr elex Modi has got new CEA,Potatoe imports r on But folks see conspiracy everywhere\"",
+        "true_label": "positive",
+        "predicted_label": "neutral",
+        "error_category": "other"
+      },
+      {
+        "text": "<USER> I agree wholeheartedly! notmyprsident StillWithHer sanders <USER> <USER> <USER> <USER> TGIFriday",
+        "true_label": "positive",
+        "predicted_label": "neutral",
+        "error_category": "other"
+      },
+      {
+        "text": "Omg. Ricky Martin may be gay but he is one fine ass gay man.",
+        "true_label": "positive",
+        "predicted_label": "negative",
+        "error_category": "other"
+      }
+    ]
+  },
+  {
+    "model": "Twitter-RoBERTa",
+    "total_errors": 2164,
+    "category_counts": {
+      "other": 1648,
+      "negation": 448,
+      "emoji_text_conflict": 38,
+      "lack_of_context": 18,
+      "mixed_sentiment": 8,
+      "sarcasm_irony": 4
+    },
+    "sample_errors": [
+      {
+        "text": "SASA will be having the first ever Bhangra Bootcamp on November 7th - 10pm at CIF! Only $5 to learn from our very own NACS 2012 Champions!",
+        "true_label": "neutral",
+        "predicted_label": "positive",
+        "error_category": "other"
+      },
+      {
+        "text": "Pretty soon I'll just do what the rest of the conservatives are doing and just not login anymore.",
+        "true_label": "neutral",
+        "predicted_label": "negative",
+        "error_category": "negation"
+      },
+      {
+        "text": "Who wants to see Maya Rudolph sing Prince with my Thursday night",
+        "true_label": "neutral",
+        "predicted_label": "positive",
+        "error_category": "other"
+      },
+      {
+        "text": "Mr Trump win without him, he can bring Confucius in the cabinet",
+        "true_label": "negative",
+        "predicted_label": "neutral",
+        "error_category": "negation"
+      },
+      {
+        "text": "THANKSGIVING UPDATE: Tony Romo passes the turkey, intercepted by 86 yr old Grandma Jean",
+        "true_label": "neutral",
+        "predicted_label": "positive",
+        "error_category": "other"
+      },
+      {
+        "text": "Also, rumor has it Maui Economic Chamber of Commerce was smooshing with Monsanto lunch in Friday. Hawaiian Politician in be with Monsanto.",
+        "true_label": "negative",
+        "predicted_label": "neutral",
+        "error_category": "other"
+      },
+      {
+        "text": "4th time I've cried today and it's surprisingly not about George Harrison",
+        "true_label": "neutral",
+        "predicted_label": "negative",
+        "error_category": "negation"
+      },
+      {
+        "text": "This Sales job might be a great fit for you: Prince George Career Open House: August 26th at 6 PM - cibc Hiring",
+        "true_label": "neutral",
+        "predicted_label": "positive",
+        "error_category": "other"
+      },
+      {
+        "text": "\\u2019No Favorites\\u2019 for Russia-Portugal Clash - Capello: MOSCOW\\u002c October 11 (RIA Novosti) - Russia\\u2019s match with Portu...",
+        "true_label": "negative",
+        "predicted_label": "neutral",
+        "error_category": "other"
+      },
+      {
+        "text": "<USER> 1st day aftr elex Modi has got new CEA,Potatoe imports r on But folks see conspiracy everywhere\"",
+        "true_label": "positive",
+        "predicted_label": "neutral",
+        "error_category": "other"
+      },
+      {
+        "text": "Everyone Google STEVE BANNON and shock, it time lookin out to share a lady today means so much to Date at the stage America.",
+        "true_label": "neutral",
+        "predicted_label": "positive",
+        "error_category": "other"
+      },
+      {
+        "text": "Got to give him credit. <USER> The combined creepiness of euphemism and euthanasia makes this potentially his signature word.",
+        "true_label": "negative",
+        "predicted_label": "neutral",
+        "error_category": "other"
+      },
+      {
+        "text": "My feeling about fears is\\u002c if you voice your fears\\u002c they may come true. I\\u2019m superstitious enough to believe that. - Meryl Streep",
+        "true_label": "positive",
+        "predicted_label": "neutral",
+        "error_category": "other"
+      },
+      {
+        "text": "Fognini is I believe only the 3rd one to beat Nadal 3 or more times in a year - the others (no points for guessing) Federer and Djokovic.",
+        "true_label": "positive",
+        "predicted_label": "neutral",
+        "error_category": "other"
+      },
+      {
+        "text": "<USER> MAC is perfect, but no longer animal-testing free \ud83d\ude3fI'm on a constant search for a Lady Danger dupe that feels as good...",
+        "true_label": "neutral",
+        "predicted_label": "negative",
+        "error_category": "negation"
+      },
+      {
+        "text": "If the TrumpTransitionTeam expects an apology from <USER> then <USER> should reciprocate. Ugly comments came from both.",
+        "true_label": "neutral",
+        "predicted_label": "negative",
+        "error_category": "other"
+      },
+      {
+        "text": "I think Meg may very well be one of the most clueless HGs ever on Big Brother. She's giving Devin a run for his money in cluelessness. BB17",
+        "true_label": "neutral",
+        "predicted_label": "negative",
+        "error_category": "other"
+      },
+      {
+        "text": "<USER> Get Saudi Arabia and Israel out of the presidency and congress and we may have peace on earth F'n Soros and Adelson!",
+        "true_label": "neutral",
+        "predicted_label": "negative",
+        "error_category": "other"
+      },
+      {
+        "text": "literally sat all day playing sims n listening to Justin Bieber",
+        "true_label": "neutral",
+        "predicted_label": "positive",
+        "error_category": "other"
+      },
+      {
+        "text": "Sucked into Up TV's \"Gilmore The Merrier\" Binge-a-thon. Have to amend my GilmoreGirlsTop4: Michel, Michel, Trix/Gran Gilmore, Luke",
+        "true_label": "negative",
+        "predicted_label": "neutral",
+        "error_category": "other"
+      }
+    ]
+  }
+]
