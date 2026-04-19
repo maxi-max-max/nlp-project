@@ -179,3 +179,83 @@
 2026-04-19 20:57:00,977 [INFO] HTTP Request: GET https://huggingface.co/api/models/cardiffnlp/twitter-roberta-base-sentiment-latest/commits/refs%2Fpr%2F43 "HTTP/1.1 200 OK"
 2026-04-19 20:57:01,321 [INFO] HTTP Request: HEAD https://huggingface.co/cardiffnlp/twitter-roberta-base-sentiment-latest/resolve/refs%2Fpr%2F43/model.safetensors.index.json "HTTP/1.1 404 Not Found"
 2026-04-19 20:57:01,469 [INFO] HTTP Request: HEAD https://huggingface.co/cardiffnlp/twitter-roberta-base-sentiment-latest/resolve/refs%2Fpr%2F43/model.safetensors "HTTP/1.1 302 Found"
+2026-04-19 21:46:50,087 [INFO] Starting model training pipeline
+2026-04-19 21:46:50,271 [INFO] Loading sparse features from data/features/X_train.npz
+2026-04-19 21:46:50,346 [INFO] Loading sparse features from data/features/X_val.npz
+2026-04-19 21:46:50,363 [INFO] Training Logistic Regression baseline on saved TF-IDF features
+2026-04-19 21:48:22,207 [INFO] Training class distribution: {'negative': 7962, 'neutral': 19217, 'positive': 14720}
+2026-04-19 21:48:22,212 [INFO] Logistic Regression validation accuracy: 0.6418
+2026-04-19 21:48:22,214 [INFO] Saved Logistic Regression model to models/logreg_tfidf.pkl
+2026-04-19 21:48:22,234 [INFO] Updated artifact hash manifest -> data/reports/artifact_hashes.json
+2026-04-19 21:48:22,399 [INFO] Training Twitter-RoBERTa on device: cpu
+2026-04-19 21:48:22,960 [INFO] HTTP Request: HEAD https://huggingface.co/cardiffnlp/twitter-roberta-base-sentiment-latest/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-19 21:48:22,968 [INFO] HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/cardiffnlp/twitter-roberta-base-sentiment-latest/3216a57f2a0d9c45a2e6c20157c20c49fb4bf9c7/config.json "HTTP/1.1 200 OK"
+2026-04-19 21:48:23,097 [INFO] HTTP Request: HEAD https://huggingface.co/cardiffnlp/twitter-roberta-base-sentiment-latest/resolve/main/tokenizer_config.json "HTTP/1.1 404 Not Found"
+2026-04-19 21:48:23,230 [INFO] HTTP Request: HEAD https://huggingface.co/cardiffnlp/twitter-roberta-base-sentiment-latest/resolve/main/tokenizer_config.json "HTTP/1.1 404 Not Found"
+2026-04-19 21:48:23,355 [INFO] HTTP Request: GET https://huggingface.co/api/models/cardiffnlp/twitter-roberta-base-sentiment-latest/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+2026-04-19 21:48:23,481 [INFO] HTTP Request: GET https://huggingface.co/api/models/cardiffnlp/twitter-roberta-base-sentiment-latest/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+2026-04-19 21:48:23,602 [INFO] HTTP Request: HEAD https://huggingface.co/cardiffnlp/twitter-roberta-base-sentiment-latest/resolve/main/vocab.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-19 21:48:23,611 [INFO] HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/cardiffnlp/twitter-roberta-base-sentiment-latest/3216a57f2a0d9c45a2e6c20157c20c49fb4bf9c7/vocab.json "HTTP/1.1 200 OK"
+2026-04-19 21:48:23,842 [INFO] HTTP Request: HEAD https://huggingface.co/cardiffnlp/twitter-roberta-base-sentiment-latest/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-19 21:48:23,844 [WARNING] Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+2026-04-19 21:48:23,852 [INFO] HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/cardiffnlp/twitter-roberta-base-sentiment-latest/3216a57f2a0d9c45a2e6c20157c20c49fb4bf9c7/config.json "HTTP/1.1 200 OK"
+2026-04-19 21:48:24,473 [INFO] HTTP Request: HEAD https://huggingface.co/cardiffnlp/twitter-roberta-base-sentiment-latest/resolve/main/model.safetensors "HTTP/1.1 404 Not Found"
+2026-04-19 21:48:24,602 [INFO] HTTP Request: GET https://huggingface.co/api/models/cardiffnlp/twitter-roberta-base-sentiment-latest "HTTP/1.1 200 OK"
+2026-04-19 21:48:24,743 [INFO] HTTP Request: GET https://huggingface.co/api/models/cardiffnlp/twitter-roberta-base-sentiment-latest/commits/main "HTTP/1.1 200 OK"
+2026-04-19 21:48:24,886 [INFO] HTTP Request: GET https://huggingface.co/api/models/cardiffnlp/twitter-roberta-base-sentiment-latest/discussions?p=0 "HTTP/1.1 200 OK"
+2026-04-19 21:48:25,020 [INFO] HTTP Request: GET https://huggingface.co/api/models/cardiffnlp/twitter-roberta-base-sentiment-latest/commits/refs%2Fpr%2F43 "HTTP/1.1 200 OK"
+2026-04-19 21:48:25,139 [INFO] HTTP Request: HEAD https://huggingface.co/cardiffnlp/twitter-roberta-base-sentiment-latest/resolve/refs%2Fpr%2F43/model.safetensors.index.json "HTTP/1.1 404 Not Found"
+2026-04-19 21:48:25,261 [INFO] HTTP Request: HEAD https://huggingface.co/cardiffnlp/twitter-roberta-base-sentiment-latest/resolve/refs%2Fpr%2F43/model.safetensors "HTTP/1.1 302 Found"
+2026-04-19 21:57:04,326 [INFO] Starting model training pipeline
+2026-04-19 21:57:04,520 [INFO] Loading sparse features from data/features/X_train.npz
+2026-04-19 21:57:04,646 [INFO] Loading sparse features from data/features/X_val.npz
+2026-04-19 21:57:04,671 [INFO] Training Logistic Regression baseline on saved TF-IDF features
+2026-04-19 21:58:50,902 [INFO] Training class distribution: {'negative': 7962, 'neutral': 19217, 'positive': 14720}
+2026-04-19 21:58:50,906 [INFO] Logistic Regression validation accuracy: 0.6418
+2026-04-19 21:58:50,909 [INFO] Saved Logistic Regression model to models/logreg_tfidf.pkl
+2026-04-19 21:58:50,927 [INFO] Updated artifact hash manifest -> data/reports/artifact_hashes.json
+2026-04-19 21:58:51,098 [INFO] Training Twitter-RoBERTa on device: cpu
+2026-04-19 21:58:51,697 [INFO] HTTP Request: HEAD https://huggingface.co/cardiffnlp/twitter-roberta-base-sentiment-latest/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-19 21:58:51,698 [WARNING] Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+2026-04-19 21:58:51,704 [INFO] HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/cardiffnlp/twitter-roberta-base-sentiment-latest/3216a57f2a0d9c45a2e6c20157c20c49fb4bf9c7/config.json "HTTP/1.1 200 OK"
+2026-04-19 21:58:51,858 [INFO] HTTP Request: HEAD https://huggingface.co/cardiffnlp/twitter-roberta-base-sentiment-latest/resolve/main/tokenizer_config.json "HTTP/1.1 404 Not Found"
+2026-04-19 21:58:51,999 [INFO] HTTP Request: HEAD https://huggingface.co/cardiffnlp/twitter-roberta-base-sentiment-latest/resolve/main/tokenizer_config.json "HTTP/1.1 404 Not Found"
+2026-04-19 21:58:52,118 [INFO] HTTP Request: GET https://huggingface.co/api/models/cardiffnlp/twitter-roberta-base-sentiment-latest/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+2026-04-19 21:58:52,239 [INFO] HTTP Request: GET https://huggingface.co/api/models/cardiffnlp/twitter-roberta-base-sentiment-latest/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+2026-04-19 21:58:52,354 [INFO] HTTP Request: HEAD https://huggingface.co/cardiffnlp/twitter-roberta-base-sentiment-latest/resolve/main/vocab.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-19 21:58:52,361 [INFO] HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/cardiffnlp/twitter-roberta-base-sentiment-latest/3216a57f2a0d9c45a2e6c20157c20c49fb4bf9c7/vocab.json "HTTP/1.1 200 OK"
+2026-04-19 21:58:52,576 [INFO] HTTP Request: HEAD https://huggingface.co/cardiffnlp/twitter-roberta-base-sentiment-latest/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-19 21:58:52,583 [INFO] HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/cardiffnlp/twitter-roberta-base-sentiment-latest/3216a57f2a0d9c45a2e6c20157c20c49fb4bf9c7/config.json "HTTP/1.1 200 OK"
+2026-04-19 21:58:53,354 [INFO] HTTP Request: HEAD https://huggingface.co/cardiffnlp/twitter-roberta-base-sentiment-latest/resolve/main/model.safetensors "HTTP/1.1 404 Not Found"
+2026-04-19 21:58:53,500 [INFO] HTTP Request: GET https://huggingface.co/api/models/cardiffnlp/twitter-roberta-base-sentiment-latest "HTTP/1.1 200 OK"
+2026-04-19 21:58:53,632 [INFO] HTTP Request: GET https://huggingface.co/api/models/cardiffnlp/twitter-roberta-base-sentiment-latest/commits/main "HTTP/1.1 200 OK"
+2026-04-19 21:58:53,782 [INFO] HTTP Request: GET https://huggingface.co/api/models/cardiffnlp/twitter-roberta-base-sentiment-latest/discussions?p=0 "HTTP/1.1 200 OK"
+2026-04-19 21:58:53,934 [INFO] HTTP Request: GET https://huggingface.co/api/models/cardiffnlp/twitter-roberta-base-sentiment-latest/commits/refs%2Fpr%2F43 "HTTP/1.1 200 OK"
+2026-04-19 21:58:54,056 [INFO] HTTP Request: HEAD https://huggingface.co/cardiffnlp/twitter-roberta-base-sentiment-latest/resolve/refs%2Fpr%2F43/model.safetensors.index.json "HTTP/1.1 404 Not Found"
+2026-04-19 21:58:54,173 [INFO] HTTP Request: HEAD https://huggingface.co/cardiffnlp/twitter-roberta-base-sentiment-latest/resolve/refs%2Fpr%2F43/model.safetensors "HTTP/1.1 302 Found"
+2026-04-19 22:01:36,672 [INFO] Starting model training pipeline
+2026-04-19 22:01:36,823 [INFO] Loading sparse features from data/features/X_train.npz
+2026-04-19 22:01:36,898 [INFO] Loading sparse features from data/features/X_val.npz
+2026-04-19 22:01:36,919 [INFO] Training Logistic Regression baseline on saved TF-IDF features
+2026-04-19 22:03:09,415 [INFO] Training class distribution: {'negative': 7962, 'neutral': 19217, 'positive': 14720}
+2026-04-19 22:03:09,419 [INFO] Logistic Regression validation accuracy: 0.6418
+2026-04-19 22:03:09,422 [INFO] Saved Logistic Regression model to models/logreg_tfidf.pkl
+2026-04-19 22:03:09,437 [INFO] Updated artifact hash manifest -> data/reports/artifact_hashes.json
+2026-04-19 22:03:09,685 [INFO] Training Twitter-RoBERTa on device: cpu
+2026-04-19 22:03:10,278 [INFO] HTTP Request: HEAD https://huggingface.co/cardiffnlp/twitter-roberta-base-sentiment-latest/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-19 22:03:10,430 [INFO] HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/cardiffnlp/twitter-roberta-base-sentiment-latest/3216a57f2a0d9c45a2e6c20157c20c49fb4bf9c7/config.json "HTTP/1.1 200 OK"
+2026-04-19 22:03:10,570 [INFO] HTTP Request: HEAD https://huggingface.co/cardiffnlp/twitter-roberta-base-sentiment-latest/resolve/main/tokenizer_config.json "HTTP/1.1 404 Not Found"
+2026-04-19 22:03:10,706 [INFO] HTTP Request: HEAD https://huggingface.co/cardiffnlp/twitter-roberta-base-sentiment-latest/resolve/main/tokenizer_config.json "HTTP/1.1 404 Not Found"
+2026-04-19 22:03:10,834 [INFO] HTTP Request: GET https://huggingface.co/api/models/cardiffnlp/twitter-roberta-base-sentiment-latest/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+2026-04-19 22:03:10,959 [INFO] HTTP Request: GET https://huggingface.co/api/models/cardiffnlp/twitter-roberta-base-sentiment-latest/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+2026-04-19 22:03:11,094 [INFO] HTTP Request: HEAD https://huggingface.co/cardiffnlp/twitter-roberta-base-sentiment-latest/resolve/main/vocab.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-19 22:03:11,467 [INFO] HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/cardiffnlp/twitter-roberta-base-sentiment-latest/3216a57f2a0d9c45a2e6c20157c20c49fb4bf9c7/vocab.json "HTTP/1.1 200 OK"
+2026-04-19 22:03:11,683 [INFO] HTTP Request: HEAD https://huggingface.co/cardiffnlp/twitter-roberta-base-sentiment-latest/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-19 22:03:11,716 [INFO] HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/cardiffnlp/twitter-roberta-base-sentiment-latest/3216a57f2a0d9c45a2e6c20157c20c49fb4bf9c7/config.json "HTTP/1.1 200 OK"
+2026-04-19 22:03:12,349 [INFO] HTTP Request: HEAD https://huggingface.co/cardiffnlp/twitter-roberta-base-sentiment-latest/resolve/main/model.safetensors "HTTP/1.1 404 Not Found"
+2026-04-19 22:03:12,491 [INFO] HTTP Request: GET https://huggingface.co/api/models/cardiffnlp/twitter-roberta-base-sentiment-latest "HTTP/1.1 200 OK"
+2026-04-19 22:03:12,650 [INFO] HTTP Request: GET https://huggingface.co/api/models/cardiffnlp/twitter-roberta-base-sentiment-latest/commits/main "HTTP/1.1 200 OK"
+2026-04-19 22:03:12,807 [INFO] HTTP Request: GET https://huggingface.co/api/models/cardiffnlp/twitter-roberta-base-sentiment-latest/discussions?p=0 "HTTP/1.1 200 OK"
+2026-04-19 22:03:12,943 [INFO] HTTP Request: GET https://huggingface.co/api/models/cardiffnlp/twitter-roberta-base-sentiment-latest/commits/refs%2Fpr%2F43 "HTTP/1.1 200 OK"
+2026-04-19 22:03:13,070 [INFO] HTTP Request: HEAD https://huggingface.co/cardiffnlp/twitter-roberta-base-sentiment-latest/resolve/refs%2Fpr%2F43/model.safetensors.index.json "HTTP/1.1 404 Not Found"
+2026-04-19 22:03:13,207 [INFO] HTTP Request: HEAD https://huggingface.co/cardiffnlp/twitter-roberta-base-sentiment-latest/resolve/refs%2Fpr%2F43/model.safetensors "HTTP/1.1 302 Found"
