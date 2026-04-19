@@ -1,3 +1,5 @@
+import argparse
+import copy
 import json
 import logging
 import pickle
@@ -10,7 +12,7 @@ import pandas as pd
 import torch
 from scipy.sparse import load_npz
 from sklearn.linear_model import LogisticRegression
-from sklearn.metrics import accuracy_score
+from sklearn.metrics import accuracy_score, f1_score
 from torch.utils.data import DataLoader, Dataset
 from transformers import (
     AutoModelForSequenceClassification,
@@ -22,7 +24,10 @@ from transformers import (
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s [%(levelname)s] %(message)s",
-    handlers=[logging.StreamHandler()],
+    handlers=[
+        logging.StreamHandler(),
+        logging.FileHandler("train_models.log"),
+    ],
 )
 log = logging.getLogger(__name__)
 
@@ -63,7 +68,7 @@ def _update_artifact_manifest(reports_dir: Path, artifacts: List[Path]) -> None:
             "size_bytes": artifact.stat().st_size,
         }
 
-    manifest["updated_at"] = pd.Timestamp.now("UTC").isoformat()
+    manifest["updated_at"] = pd.Timestamp.utcnow().isoformat()
     with manifest_path.open("w", encoding="utf-8") as f:
         json.dump(manifest, f, indent=2)
     log.info("Updated artifact hash manifest -> %s", manifest_path.as_posix())
@@ -138,8 +143,14 @@ def train_logistic_regression(
         max_iter=5000,
         solver="lbfgs",
         random_state=42,
+        class_weight="balanced",
     )
     model.fit(X_train, y_train)
+    class_counts = {
+        ID_TO_LABEL[class_id]: int(count)
+        for class_id, count in enumerate(np.bincount(y_train, minlength=len(LABEL_TO_ID)))
+    }
+    log.info("Training class distribution: %s", class_counts)
 
     val_preds = model.predict(X_val)
     val_acc = accuracy_score(y_val, val_preds)
@@ -185,7 +196,8 @@ def evaluate_twitter_roberta(
     labels = np.concatenate(labels_all)
     avg_loss = total_loss / max(1, len(loader))
     acc = accuracy_score(labels, preds)
-    return {"loss": float(avg_loss), "accuracy": float(acc)}
+    macro_f1 = f1_score(labels, preds, average="macro", zero_division=0)
+    return {"loss": float(avg_loss), "accuracy": float(acc), "macro_f1": float(macro_f1)}
 
 
 def train_twitter_roberta(
@@ -198,6 +210,7 @@ def train_twitter_roberta(
     batch_size: int = 32,
     learning_rate: float = 2e-5,
     epochs: int = 3,
+    early_stopping_patience: int = 2,
 ) -> Dict:
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     log.info("Training Twitter-RoBERTa on device: %s", device)
@@ -208,7 +221,6 @@ def train_twitter_roberta(
         num_labels=3,
         id2label=ID_TO_LABEL,
         label2id=LABEL_TO_ID,
-        ignore_mismatched_sizes=True,  # suppress UNEXPECTED pooler key warnings
     )
     model.to(device)
 
@@ -227,6 +239,9 @@ def train_twitter_roberta(
     )
 
     history = []
+    best_val_acc = float("-inf")
+    epochs_without_improvement = 0
+    best_model_state = None
     for epoch in range(1, epochs + 1):
         model.train()
         running_loss = 0.0
@@ -240,6 +255,7 @@ def train_twitter_roberta(
             outputs = model(input_ids=input_ids, attention_mask=attention_mask, labels=labels)
             loss = outputs.loss
             loss.backward()
+            torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=1.0)
             optimizer.step()
             scheduler.step()
 
@@ -249,14 +265,19 @@ def train_twitter_roberta(
         val_metrics = evaluate_twitter_roberta(model, val_loader, device)
         val_loss = val_metrics["loss"]
         val_acc = val_metrics["accuracy"]
+        val_macro_f1 = val_metrics["macro_f1"]
 
         log.info(
-            "Twitter-RoBERTa epoch %d/%d - train_loss: %.4f - val_loss: %.4f - val_acc: %.4f",
+            (
+                "Twitter-RoBERTa epoch %d/%d - train_loss: %.4f - val_loss: %.4f "
+                "- val_acc: %.4f - val_macro_f1: %.4f"
+            ),
             epoch,
             epochs,
             train_loss,
             val_loss,
             val_acc,
+            val_macro_f1,
         )
         history.append(
             {
@@ -264,8 +285,27 @@ def train_twitter_roberta(
                 "train_loss": float(train_loss),
                 "val_loss": float(val_loss),
                 "val_accuracy": float(val_acc),
+                "val_macro_f1": float(val_macro_f1),
             }
         )
+
+        if val_acc > best_val_acc:
+            best_val_acc = val_acc
+            epochs_without_improvement = 0
+            best_model_state = copy.deepcopy(model.state_dict())
+            log.info("Validation accuracy improved; updating best checkpoint.")
+        else:
+            epochs_without_improvement += 1
+            if epochs_without_improvement >= early_stopping_patience:
+                log.info(
+                    "Early stopping triggered after %d epochs without validation accuracy improvement.",
+                    early_stopping_patience,
+                )
+                break
+
+    if best_model_state is not None:
+        model.load_state_dict(best_model_state)
+        log.info("Restored best Twitter-RoBERTa weights before saving.")
 
     out_dir = models_dir / "twitter_roberta_sentiment"
     out_dir.mkdir(parents=True, exist_ok=True)
@@ -293,7 +333,30 @@ def train_twitter_roberta(
     }
 
 
+def _parse_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser(
+        description="Train sentiment models (LogReg TF-IDF + Twitter-RoBERTa)."
+    )
+    parser.add_argument(
+        "--epochs",
+        type=int,
+        default=3,
+        help="Number of training epochs for Twitter-RoBERTa (default: 3).",
+    )
+    parser.add_argument(
+        "--max-train",
+        type=int,
+        default=None,
+        help=(
+            "Optional cap on training examples for faster experiments. "
+            "Default uses all training data; this can be slow on CPU."
+        ),
+    )
+    return parser.parse_args()
+
+
 def main() -> None:
+    args = _parse_args()
     log.info("Starting model training pipeline")
     models_dir, reports_dir = _ensure_dirs()
 
@@ -316,36 +379,30 @@ def main() -> None:
 
     train_texts = _load_texts(train_csv)
     val_texts = _load_texts(val_csv)
-    # Fine-tune on a manageable subset to keep CPU training time reasonable
-    # (the pretrained model is already specialised for tweet sentiment)
-    max_train = 5000
-    max_val = 1000
-    if len(train_texts) > max_train:
-        rng = np.random.RandomState(42)
-        idx = rng.choice(len(train_texts), max_train, replace=False)
-        train_texts_sub = [train_texts[i] for i in idx]
-        y_train_sub = y_train[idx]
-    else:
-        train_texts_sub, y_train_sub = train_texts, y_train
-
-    if len(val_texts) > max_val:
-        rng = np.random.RandomState(42)
-        idx = rng.choice(len(val_texts), max_val, replace=False)
-        val_texts_sub = [val_texts[i] for i in idx]
-        y_val_sub = y_val[idx]
-    else:
-        val_texts_sub, y_val_sub = val_texts, y_val
+    roberta_y_train = y_train
+    roberta_train_texts = train_texts
+    if args.max_train is not None:
+        if args.max_train <= 0:
+            raise ValueError("--max-train must be a positive integer.")
+        limit = min(args.max_train, len(train_texts))
+        roberta_train_texts = train_texts[:limit]
+        roberta_y_train = y_train[:limit]
+        log.warning(
+            "Applying training subset for Twitter-RoBERTa: %d/%d examples (--max-train).",
+            limit,
+            len(train_texts),
+        )
 
     twitter_roberta_result = train_twitter_roberta(
-        train_texts=train_texts_sub,
-        y_train=y_train_sub,
-        val_texts=val_texts_sub,
-        y_val=y_val_sub,
+        train_texts=roberta_train_texts,
+        y_train=roberta_y_train,
+        val_texts=val_texts,
+        y_val=y_val,
         models_dir=models_dir,
         reports_dir=reports_dir,
-        batch_size=16,
+        batch_size=32,
         learning_rate=2e-5,
-        epochs=1,
+        epochs=args.epochs,
     )
 
     history_payload = {

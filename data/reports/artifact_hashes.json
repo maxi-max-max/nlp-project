@@ -1,29 +1,9 @@
 {
-  "updated_at": "2026-04-18T16:53:17.360787+00:00",
+  "updated_at": "2026-04-19T18:55:55.314326+00:00",
   "artifacts": {
-    "models/tfidf_vectorizer.pkl": {
-      "sha256": "6e8623665f9cdca96a2c3e3e4702e88de43914bc5039778d326968de618a96ac",
-      "size_bytes": 1916480
-    },
     "models/logreg_tfidf.pkl": {
-      "sha256": "9d93d6c9c58141d4adba9a4b22e98c9f0a63452c00c69cf23b2d2ee3ea8052f7",
-      "size_bytes": 1200863
-    },
-    "models/twitter_roberta_sentiment/config.json": {
-      "sha256": "ffee2a4b9e7958abcba064d37195274150078a250d1c18b6f47c20178bbf656e",
-      "size_bytes": 972
-    },
-    "models/twitter_roberta_sentiment/model.safetensors": {
-      "sha256": "9a803ff08447ec24c1c16e6427ea752c6d1149c9bbcb2fad09b74dc062bd18fa",
-      "size_bytes": 498615876
-    },
-    "models/twitter_roberta_sentiment/tokenizer.json": {
-      "sha256": "4b7cc62417bfed58be7152d1555b904e7d36d38f4a9dccdb62d2dbfaf82413c6",
-      "size_bytes": 3558912
-    },
-    "models/twitter_roberta_sentiment/tokenizer_config.json": {
-      "sha256": "25a8a03e73e87446f09459f98a06e960c5b6fc92e3ba3dc66ee0c540e4781d47",
-      "size_bytes": 387
+      "sha256": "02fcaad34f45681b103caaabfa3dc1756e859bc1a17a5711128ae00203e5d764",
+      "size_bytes": 1200874
     }
   }
 }

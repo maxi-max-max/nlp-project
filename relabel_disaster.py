@@ -1,83 +1,68 @@
-"""
-relabel_disaster.py
--------------------
-The disaster domain-shift dataset was originally labelled entirely as
-"neutral", which makes domain-shift evaluation degenerate (any model that
-just predicts neutral achieves ~69 % accuracy, hiding real performance gaps).
-
-This script re-labels each disaster tweet with a VADER-derived sentiment
-(negative / neutral / positive) so that evaluation metrics are meaningful.
-
-VADER (Valence Aware Dictionary and sEntiment Reasoner) is a rule-based
-lexicon designed for social-media text and is entirely independent of the
-transformer or TF-IDF models we train, so there is no circular evaluation.
-
-Thresholds (standard VADER practice):
-  compound >= +0.05  →  positive
-  compound <= -0.05  →  negative
-  otherwise          →  neutral
-
-Outputs
--------
-  data/test_domain_shift/tweets_disaster.csv   (overwritten in-place)
-  data/raw/disaster_raw.csv                    (overwritten in-place)
-"""
-
 import logging
 from pathlib import Path
 
 import pandas as pd
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 
+
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s [%(levelname)s] %(message)s",
+    handlers=[
+        logging.StreamHandler(),
+        logging.FileHandler("relabel_disaster.log"),
+    ],
 )
 log = logging.getLogger(__name__)
 
-POSITIVE_THRESHOLD = 0.05
-NEGATIVE_THRESHOLD = -0.05
 
-
-def vader_label(text: str, analyser: SentimentIntensityAnalyzer) -> str:
-    score = analyser.polarity_scores(str(text))["compound"]
-    if score >= POSITIVE_THRESHOLD:
+def _score_to_label(compound: float) -> str:
+    if compound >= 0.05:
         return "positive"
-    if score <= NEGATIVE_THRESHOLD:
+    if compound <= -0.05:
         return "negative"
     return "neutral"
 
 
-def relabel(path: Path, analyser: SentimentIntensityAnalyzer) -> pd.DataFrame:
+def _relabel_file(path: Path, analyzer: SentimentIntensityAnalyzer) -> None:
     df = pd.read_csv(path)
-    before = df["sentiment"].value_counts().to_dict()
-    df["sentiment"] = df["text"].apply(lambda t: vader_label(t, analyser))
-    after = df["sentiment"].value_counts().to_dict()
-    log.info(
-        "%s  |  before: %s  |  after: %s",
-        path.name,
-        before,
-        after,
-    )
+    if "text" not in df.columns:
+        raise ValueError(f"'text' column missing in {path}")
+
+    if "source_domain" not in df.columns and "disaster" in path.name.lower():
+        df["source_domain"] = "disaster"
+        log.warning(
+            "Column 'source_domain' was missing in %s; defaulted to 'disaster'.",
+            path.as_posix(),
+        )
+
+    text_series = df["text"].fillna("").astype(str)
+    vader_compound = text_series.apply(lambda x: float(analyzer.polarity_scores(x)["compound"]))
+    df["vader_compound"] = vader_compound
+    df["sentiment"] = vader_compound.apply(_score_to_label)
     df.to_csv(path, index=False)
-    return df
+
+    class_distribution = df["sentiment"].value_counts(dropna=False).to_dict()
+    log.info("Re-labeled with VADER and saved to %s", path.as_posix())
+    log.info("Saved transparency column 'vader_compound' with raw VADER scores.")
+    log.info("Class distribution after relabeling: %s", class_distribution)
 
 
 def main() -> None:
-    analyser = SentimentIntensityAnalyzer()
-
-    paths = [
+    analyzer = SentimentIntensityAnalyzer()
+    candidate_paths = [
         Path("data/test_domain_shift/tweets_disaster.csv"),
         Path("data/raw/disaster_raw.csv"),
     ]
+    existing_paths = [path for path in candidate_paths if path.exists()]
+    if not existing_paths:
+        raise FileNotFoundError(
+            "Missing disaster dataset files. Expected at least one of: "
+            "data/test_domain_shift/tweets_disaster.csv, data/raw/disaster_raw.csv"
+        )
 
-    for p in paths:
-        if p.exists():
-            relabel(p, analyser)
-        else:
-            log.warning("File not found, skipping: %s", p)
-
-    log.info("Disaster dataset re-labelled with VADER. Re-run evaluate_models.py next.")
+    for path in existing_paths:
+        _relabel_file(path, analyzer)
 
 
 if __name__ == "__main__":
